@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "786256040605",
+    "project_id": "hashemi-ef8a2",
+    "storage_bucket": "hashemi-ef8a2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:786256040605:android:cb80360ee324fd3186ba74",
+        "android_client_info": {
+          "package_name": "com.hesham.hesham"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "786256040605-4npb0621e53kt1fj6q8381uh215hhsm5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPEqdJVwlUh57-Ruw26SgIwJBdJJYcFtI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "786256040605-4npb0621e53kt1fj6q8381uh215hhsm5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

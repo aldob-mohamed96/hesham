@@ -1,0 +1,132 @@
+{
+"lang": "-----------------langauge-------------------------------------------------------------",
+
+     "en": "English",
+     "ar": "العربية",
+
+
+
+
+  "lang_screen_text": "-----------------app lang screen text----------------------------------------",
+  "welcome_message": "Welcome to Ahmed Hashem AlHashemi Platform",
+  "class_school": "Majors",
+  "default_user_name": "mohamed ahmed",
+
+  "no_route_found":"No Page Found",
+  "empty_content": "Empty Content",
+  "video": "Video",
+  "material": "material",
+  "upload": "upload homework",
+  "send": "Send",
+
+  "lang_input_error": "-----------------input errors---------------------------------------------",
+
+    "in_Valid_code":"Code is InValid....try Again !!",
+    "empty_error_input": "Empty Input",
+    "usernameStyle_error_input": "Phone number not Correct",
+    "shortPassword_error_input": "Short Password",
+    "notIdenticalPassword_error_input": "Not Identical Password",
+    "weakPassword_error_input": "Weak Password",
+    "veryLong_error_input": "Very Long Input",
+    "length_error_input": "Length Error",
+    "maxInputCount_error_input": "Max Input Count",
+    "notPhoneStyle_error_input": "Phone Number Not Correct",
+    "notEmail_error_input": "Not Email Style",
+    "notInteger_error_input": "Not Integer",
+    "notDouble_error_input": "Not Double",
+    "notBool_error_input": "Not Bool",
+    "notString_error_input": "Not String",
+    "containSpecialChar_error_input": "Contain Special Char",
+    "unknown_error_input": "Unknown Error",
+    "in_valid_input": "Must be integer",
+    "upload_file": "Select File Or Image",
+    "uploaded_before": "You have already uploaded the homework for this lesson",
+
+
+
+  "lang_messages": "-----------------messages---------------------------------------------------",
+
+    "success":"Success",
+    "no_content":"Success Without Data Content !!",
+    "bad_content":"Bad Content Error !!",
+    "un_authorised":"User Un Authorised !!",
+    "forbidden":"Forbidden Error !!",
+    "internal_server_error":"Some Thing Went Wrong !!",
+    "not_found":"Not Found Data !!",
+    "location_permission_dined":"Permission Dined !!",
+    "location_un_available":"Unable Detected Location !!",
+    "location_service_disabled":"Location Disabled !!",
+    "location_detected_timeOut":"Unable Detected location Time Out !!",
+    "location_update_error":"Unable to get Position Stream  !!",
+    "location_already_subscribed":"Location Already Subscribed !!",
+    "location_activity_missing":"location Activity Missing For Android device",
+    "permission_dined":"Permission is Dined, Enable Permission !!",
+    "permission_check_error":"While Permission Checking Error Occurred!!",
+    "unknown_permission_error":"Unknown Error In Permission Try Again!",
+    "no_image_selected":"No Image Selected Try Again!",
+    "allow":"permission allowed",
+    "permission_permanently_denied":"permission is Permanently Denied",
+    "permission_restricted":"Permission is Restricted from person",
+    "image_selected":"successfully uploaded",
+    "connect_timeOut":"Time Out Error !!",
+    "cancel":"Request Canceled Error !!",
+    "recieve_timeOut":"Time Out Error !!",
+    "send_timeOut":"Time Out Error !!",
+    "cash_error":"Cash Error !!",
+    "no_internet_connection":"No Connection Internet !!",
+    "unknown_error":"Some Thing Went Wrong !!",
+    "cant_not_open":"Cant Not Open Url Try again Later!!",
+    "in_valid_url":"This Url inValid check again!!",
+    "system_error":"An Error Occurred in System try Again Later!!",
+    "unKnown_launcher_error":"UnKnown Error Occurred in Launch Url",
+    "battery_info_error":"Error While get Battery Info",
+    "timer_is_active":"Timer Is Active",
+    "timer_is_in_Active":"Timer Is InActive",
+    "timer_cancel_error":"Error In Cancel Timer check if Is Active",
+    "timer_error":"Timer Error Occurred !! ",
+    "onInit_Error":"Error occurred When Init Setting Local Notification !! ",
+    "on_get_setting_ios_or_android_error":"Error Occurred When Init Setting Local Notification !! ",
+    "on_cancel_all_error":"Cancel All Notification Error Occurred !!",
+    "on_cancel_one_error":"Cancel Notification Error Occurred !!",
+    "on_show_error":"Show Notification Error Occurred !!",
+    "on_select_notification_error":"Select Notification Error Occurred !!",
+    "on_did_receive_notification_error":"Get Receive Notification Error Occurred !!",
+    "on_get_details_notification_error":"Get Details Notification Error Occurred !!",
+    "notification_title_foreground_android_location":"Running in Background",
+    "notification_text_foreground_android_location":"app will continue to receive your location even when you aren't using it",
+    "loading": "Loading....",
+    "account_pending": "This account is under review. We will contact you as soon as possible?",
+    "exit_hint": "Are You Sure to Exit ??",
+
+"lang_input": "-----------------input------------------------------------------------------------",
+
+   "name": "Name",
+   "email": "Email",
+
+
+   "confirm_password": "Confirm Password",
+   "camera": "Camera",
+   "gallery": "Gallery",
+   "address": "Address",
+   "username": "Username",
+   "password":"Password",
+  "old_password": "Old Password",
+
+"lang_button": "-----------------button-----------------------------------------------------------",
+
+   "resend_code": "Resend Code ?",
+   "retry_again":"Retry again",
+   "ok":"Ok",
+   "dismiss":"Dismiss",
+   "forget_password": "Forget Password",
+   "next": "Next",
+   "login":"Login",
+   "logout":"Logout",
+   "share_app": "Share App With",
+   "save": "Save",
+   "back": "Back"
+
+
+
+
+}

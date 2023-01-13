@@ -16,10 +16,16 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MainScaffold(
-      widget: Container(
-          color: ColorManager.primaryColorLight,
-          child: const Center(child: CircularLoading(),)),
+    return Scaffold(
+      backgroundColor: ColorManager.primaryColor,
+      body: SizedBox(
+
+        width: context.width,
+        height: context.height,
+        child: Center(child: Image.asset(
+          ImagesAssetsManage.splashImages, width: context.width,
+          height: context.height,)),),
     );
   }
+
 }

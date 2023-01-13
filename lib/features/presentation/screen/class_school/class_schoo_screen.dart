@@ -295,7 +295,7 @@ class HomeWorkAnswer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Icon(Icons.upload_rounded,size: AppSize.appSize20,color: ColorManager.whiteColor,),
-              Text( AppLocalizationsImpl.of(context)!.translate('upload'), style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Colors.white,fontSize: FontSize.fontSize12),)
+              Text( AppLocalizationsImpl.of(context)!.translate('upload'), textAlign: TextAlign.center,style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Colors.white,fontSize: FontSize.fontSize12),)
 
             ],
           ),),
@@ -326,7 +326,7 @@ class MaterialClass extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Icon(Icons.picture_as_pdf,size: AppSize.appSize20,color: ColorManager.whiteColor,),
-              Text( AppLocalizationsImpl.of(context)!.translate('material'), style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Colors.white,fontSize: FontSize.fontSize12),)
+              Text( AppLocalizationsImpl.of(context)!.translate('material'),  textAlign: TextAlign.center,style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Colors.white,fontSize: FontSize.fontSize12),)
 
             ],
           ),),
@@ -352,7 +352,7 @@ class VideoMaterialClass extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Icon(Icons.video_collection_rounded,size: AppSize.appSize20,color: ColorManager.whiteColor,),
-              Text( AppLocalizationsImpl.of(context)!.translate('video'), style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Colors.white,fontSize: FontSize.fontSize12),)
+              Text( AppLocalizationsImpl.of(context)!.translate('video'),  textAlign: TextAlign.center,style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Colors.white,fontSize: FontSize.fontSize12),)
 
             ],
           ),),

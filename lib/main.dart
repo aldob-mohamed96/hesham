@@ -24,9 +24,11 @@ import 'features/domain/usecases/app_usecase.dart';
 import 'features/presentation/routes/app_pages.dart';
 import 'features/presentation/routes/app_routes.dart';
 import 'core/di/dependency_injection.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await initAppServicesGetIt();
   Firebase.initializeApp();
@@ -37,6 +39,7 @@ void main() async {
   runApp(
    const AppMaterial(),
   );
+  FlutterNativeSplash.remove();
  // disableScreen();
 
 }

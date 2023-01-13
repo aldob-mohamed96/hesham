@@ -79,10 +79,20 @@ class Widgets extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Column(
-       crossAxisAlignment: CrossAxisAlignment.start,
+       crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-           SizedBox(height:context.height* AppSize.appSize0_01,),
-          _welcomeMessage(context),
+          Container(
+
+            decoration: BoxDecoration(
+              borderRadius:const BorderRadius.only(
+                  bottomRight: Radius.circular(10), bottomLeft: Radius.circular(10)),
+
+              color: ColorManager.primaryColor,
+              image:const DecorationImage(image: AssetImage(ImagesAssetsManage.brandImages,)),
+            ),
+            height: AppSize.appSize40,width:context.width,
+          ),
+
            SizedBox(height:context.height* AppSize.appSize0_01,),
           _slider(context),
 
@@ -101,14 +111,19 @@ class Widgets extends StatelessWidget {
 
   
    _hintText(BuildContext context) {
-    return SizedBox(
-      height: context.height*AppSize.appSize0_5,
-      child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppPadding.appPadding20),
-            child: Text(AppLocalizationsImpl.of(context)!.translate(AppStrings.classSchool),
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(color:
-              ColorManager.primaryColor,fontWeight: FontWeight.bold,fontSize: FontSize.fontSize18,),),
-          ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: context.height*AppSize.appSize0_5,
+          child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AppPadding.appPadding20),
+                child: Text(AppLocalizationsImpl.of(context)!.translate(AppStrings.classSchool),
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(color:
+                  ColorManager.whiteColor,fontWeight: FontWeight.bold,fontSize: FontSize.fontSize18,),),
+              ),
+        ),
+      ],
     );
   }
   _welcomeMessage(BuildContext context) {
@@ -142,8 +157,7 @@ class Widgets extends StatelessWidget {
               scrollDirection: Axis.horizontal,
             ),
             items: state.images.map((i) {
-              return Card(elevation: 5,child:
-              CachedNetworkImage(
+              return CachedNetworkImage(
                 color: Colors.white,
                 width: context.width,
                 height:AppSize.appSize150 ,
@@ -166,9 +180,6 @@ class Widgets extends StatelessWidget {
                 ),
                 placeholder: (context, url) =>const Center(child:  CircularProgressIndicator()),
                 errorWidget: (context, url, error) => Card(child: Image.asset(ImagesAssetsManage.splashImages)),
-              )
-
-
               )
                 ;
             }).toList(),

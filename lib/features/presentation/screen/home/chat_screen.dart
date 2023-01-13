@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/di/dependency_injection.dart';
+import '../../../../core/resources/assets_manager.dart';
 import '../../../../core/resources/color_manager.dart';
 import '../../../../core/resources/font_manager.dart';
 import '../../../../core/resources/values_manager.dart';
@@ -47,7 +48,10 @@ class MaintainScreen extends StatelessWidget {
 
               backgroundColor: ColorManager.primaryColor,
               automaticallyImplyLeading: false,
-              centerTitle: true,title: Text("الهاشمي",style: TextStyle(color: ColorManager.whiteColor),)),
+              centerTitle: true,
+                title:SizedBox(
+                  width: context.width/2,
+                  child: Image.asset(ImagesAssetsManage.logoImages),)),
             body: const MaintainContent()),));
   }
 }

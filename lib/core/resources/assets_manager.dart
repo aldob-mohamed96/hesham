@@ -5,6 +5,9 @@ const String assetIconsPath = "assets/icons";
 
 class ImagesAssetsManage {
   static const String splashImages = "$assetImagesPath/splash.png";
+  static const String backImages = "$assetImagesPath/back.png";
+  static const String logoImages = "$assetImagesPath/logo.png";
+  static const String brandImages = "$assetImagesPath/brand.png";
   static const String mock2 = "$assetImagesPath/mock2.jpg";
   static const String mock3 = "$assetImagesPath/mock3.jpg";
   static const String mock4 = "$assetImagesPath/mock4.jpg";

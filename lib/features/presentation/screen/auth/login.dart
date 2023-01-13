@@ -46,62 +46,11 @@ class _Content extends StatelessWidget {
       create: (context) {
         return instance<LoginBloc>();
       },
-      child: SingleChildScrollView(
-        child: Responsive(
-          mobile: const MobileLoginScreen(),
-          desktop: Row(
-            children: [
-              const Expanded(
-                child: LoginScreenTopImage(),
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-
-                    SizedBox(
-                      width: 450,
-                      child: SingleChildScrollView(child: LoginForm()),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      child: LoginForm(),
     );
   }
 }
 
-class MobileLoginScreen extends StatelessWidget {
-  const MobileLoginScreen({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-
-
-          Row(
-            children: const [
-              Spacer(),
-              Expanded(
-                flex: 8,
-                child: LoginForm(),
-              ),
-              Spacer(),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 class LoginForm extends StatelessWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -128,9 +77,14 @@ class LoginForm extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           mainAxisSize: MainAxisSize.min,
           children: [
-            _PhoneInput(),
+            SizedBox(height: AppSize.appSize80,width:context.width*AppSize.appSize0_85,
+            
+            child: Image.asset(ImagesAssetsManage.logoImages),
+            ),
+            const  SizedBox(height: AppSize.appSize30,),
+            SizedBox(width: context.width*AppSize.appSize0_85,child: _PhoneInput()),
             const Padding(padding: EdgeInsets.all(AppPadding.appPadding14)),
-            _PasswordInput(),
+            SizedBox(width: context.width*AppSize.appSize0_85,child: _PasswordInput()),
             const Padding(padding: EdgeInsets.all(AppPadding.appPadding14)),
             const _LoginButton(),
           ],
@@ -138,32 +92,6 @@ class LoginForm extends StatelessWidget {
   }
 }
 
-class LoginScreenTopImage extends StatelessWidget {
-  const LoginScreenTopImage({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-
-        const SizedBox(height: AppPadding.appPadding30),
-        Row(
-          children: [
-            const Spacer(),
-            Expanded(
-              flex: AppValue.appValue8,
-              child: Image.asset(ImagesAssetsManage.mock2,height: AppSize.appSize200,width: context.width,),
-            ),
-            const Spacer(),
-          ],
-        ),
-        const SizedBox(height: AppPadding.appPadding30),
-      ],
-    );
-  }
-}
 
 class _PhoneInput extends StatelessWidget {
   @override
@@ -246,6 +174,7 @@ class _LoginButton extends StatelessWidget {
             child: Hero(
               tag: "button_login",
               child: ElevatedButton(
+                style: ButtonStyle(backgroundColor: MaterialStateProperty.all(ColorManager.whiteColor)),
                 key: const Key(AppConstants.keyLoginButtonFiled),
                 onPressed: state.username.valid&&state.password.valid
                     ? () =>
@@ -254,7 +183,7 @@ class _LoginButton extends StatelessWidget {
 
                     : null,
                 child: Text(AppLocalizationsImpl.of(context)!
-                    .translate(AppStrings.login)),
+                    .translate(AppStrings.login),style: TextStyle(color: ColorManager.primaryColor)),
               ),
             ),
           );

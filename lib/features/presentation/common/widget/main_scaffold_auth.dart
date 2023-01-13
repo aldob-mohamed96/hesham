@@ -45,18 +45,8 @@ class MainScaffold extends StatelessWidget {
 
               resizeToAvoidBottomInset: false,
               body: Container(
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topRight,
-                      end: Alignment.bottomLeft,
-                      stops: [0.1, 0.5, 0.7, 0.9],
-                      colors: [
-                        ColorManager.primaryColor,
-                        ColorManager.primaryColorLight,
-                        ColorManager.transparentColor,
-                        ColorManager.primaryColor,
-                      ],
-                    )
+                decoration:const BoxDecoration(
+                    image: DecorationImage(image: AssetImage(ImagesAssetsManage.backImages,),fit: BoxFit.fill),
                 ),
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height,
@@ -121,10 +111,12 @@ class _HomeScaffoldState extends State<HomeScaffold>  with SingleTickerProviderS
 
 
               appBar: AppBar(
-                 title: Text("الهاشمي",style: TextStyle(color: ColorManager.whiteColor),),
+                elevation: 0,
+
+                 title: SizedBox(child: Image.asset(ImagesAssetsManage.logoImages),),
                 centerTitle: true,
                 automaticallyImplyLeading: false,
-                leading:    BlocBuilder<HomeBloc, HomeState>(
+                leading:BlocBuilder<HomeBloc, HomeState>(
                   builder: (context, state) {
                     User user= context.select((AuthenticationBloc auth) => auth.user);
                     return Column(
@@ -132,7 +124,7 @@ class _HomeScaffoldState extends State<HomeScaffold>  with SingleTickerProviderS
                       children: [
                          Icon(Icons.person,color: ColorManager.whiteColor,size: 20,),
 
-                        Text(AppLocalizationsImpl.of(context)!.translate(user.name), style:Theme.of(context).textTheme.bodyText2!.copyWith(color: ColorManager.whiteColor,fontSize: FontSize.fontSize10,overflow: TextOverflow.ellipsis)),
+                        Text(AppLocalizationsImpl.of(context)!.translate(user.name), textAlign: TextAlign.center,style:Theme.of(context).textTheme.bodyText2!.copyWith(color: ColorManager.whiteColor,fontSize: FontSize.fontSize10,overflow: TextOverflow.ellipsis)),
 
 
 
@@ -166,7 +158,8 @@ class _HomeScaffoldState extends State<HomeScaffold>  with SingleTickerProviderS
                 ],
               ),
               resizeToAvoidBottomInset: false,
-              body: widget.widget,
+              body: Container(child: widget.widget,
+        ),
 
             )));
   }

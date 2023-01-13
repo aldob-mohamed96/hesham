@@ -320,7 +320,7 @@ class FullScreenModal extends ModalRoute {
                 animatedTexts: [
 
                   ColorizeAnimatedText(
-                    'الهاشمي',
+                    'أكسفورد',
                     textStyle: colorizeTextStyle,
                     colors: colorizeColors,
                   ),

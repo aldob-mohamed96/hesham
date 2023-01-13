@@ -105,63 +105,61 @@ class _HomeScaffoldState extends State<HomeScaffold>  with SingleTickerProviderS
     return MediaQuery(
         data: mediaQueryData.copyWith(
             textScaleFactor: constrainedTextScaleFactor as double?),
-        child: WillPopScope(
-            onWillPop: () async => false,
-            child: Scaffold(
+        child: Scaffold(
 
 
-              appBar: AppBar(
-                elevation: 0,
+          appBar: AppBar(
+            elevation: 0,
 
-                 title: SizedBox(child: Image.asset(ImagesAssetsManage.logoImages),),
-                centerTitle: true,
-                automaticallyImplyLeading: false,
-                leading:BlocBuilder<HomeBloc, HomeState>(
-                  builder: (context, state) {
-                    User user= context.select((AuthenticationBloc auth) => auth.user);
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                         Icon(Icons.person,color: ColorManager.whiteColor,size: 20,),
+             title: SizedBox(child: Image.asset(ImagesAssetsManage.logoImages),),
+            centerTitle: true,
+            automaticallyImplyLeading: false,
+            leading:BlocBuilder<HomeBloc, HomeState>(
+              builder: (context, state) {
+                User user= context.select((AuthenticationBloc auth) => auth.user);
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                     Icon(Icons.person,color: ColorManager.whiteColor,size: 20,),
 
-                        Text(AppLocalizationsImpl.of(context)!.translate(user.name), textAlign: TextAlign.center,style:Theme.of(context).textTheme.bodyText2!.copyWith(color: ColorManager.whiteColor,fontSize: FontSize.fontSize10,overflow: TextOverflow.ellipsis)),
+                    Text(AppLocalizationsImpl.of(context)!.translate(user.name), textAlign: TextAlign.center,style:Theme.of(context).textTheme.bodyText2!.copyWith(color: ColorManager.whiteColor,fontSize: FontSize.fontSize10,overflow: TextOverflow.ellipsis)),
 
 
 
-                      ],
-                    );
-                  },
+                  ],
+                );
+              },
+            ),
+            backgroundColor: ColorManager.primaryColor,
+            actions: [
+              NotificationIcon(),
+              PopupMenuButton(
+                iconSize: AppSize.appSize20,
+                onSelected: (value) {
+
+                },
+                shape:const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(8.0),
+                    bottomRight: Radius.circular(8.0),
+                    topLeft: Radius.circular(8.0),
+                    topRight: Radius.circular(8.0),
+                  ),
                 ),
-                backgroundColor: ColorManager.primaryColor,
-                actions: [
-                  NotificationIcon(),
-                  PopupMenuButton(
-                    iconSize: AppSize.appSize20,
-                    onSelected: (value) {
+                itemBuilder: (ctx) => [
+                  _buildPopupMenuItemLang(),
+                  _buildPopupMenuItemSupport(),
+                  _buildPopupMenuItemLogout()
 
-                    },
-                    shape:const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(8.0),
-                        bottomRight: Radius.circular(8.0),
-                        topLeft: Radius.circular(8.0),
-                        topRight: Radius.circular(8.0),
-                      ),
-                    ),
-                    itemBuilder: (ctx) => [
-                      _buildPopupMenuItemLang(),
-                      _buildPopupMenuItemSupport(),
-                      _buildPopupMenuItemLogout()
-
-                    ],
-                  )
                 ],
-              ),
-              resizeToAvoidBottomInset: false,
-              body: Container(child: widget.widget,
+              )
+            ],
+          ),
+          resizeToAvoidBottomInset: false,
+          body: Container(child: widget.widget,
         ),
 
-            )));
+        ));
   }
  PopupMenuItem _buildPopupMenuItemLang() {
    final res= context.read<LangaugeCubit>().state.locale.languageCode;

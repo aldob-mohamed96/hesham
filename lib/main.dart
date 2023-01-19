@@ -27,8 +27,8 @@ import 'core/di/dependency_injection.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() async {
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  WidgetsFlutterBinding.ensureInitialized();
+
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await initAppServicesGetIt();
   Firebase.initializeApp();
@@ -39,7 +39,7 @@ void main() async {
   runApp(
    const AppMaterial(),
   );
-  FlutterNativeSplash.remove();
+
  // disableScreen();
 
 }
@@ -115,17 +115,30 @@ class _AppMaterialsState extends State<AppMaterials>
                 listener: (cont, state) async {
                   switch (state.authenticationStatus) {
                     case AuthenticationStatus.authenticated:
-                         _navigator.pushReplacementNamed(Routes.homeRoot);
+                          Future.delayed(Duration(seconds: 5),(){
+                            _navigator.pushReplacementNamed(Routes.homeRoot);
+
+                          });
                          break;
                     case AuthenticationStatus.unauthenticated:
-                         _navigator.pushReplacementNamed(Routes.loginRoot);
+                        Future.delayed(Duration(seconds: 5),(){
+                          _navigator.pushReplacementNamed(Routes.loginRoot);
+
+                        });
                          break;
                     case AuthenticationStatus.firstTimeAppOpened:
-                         _navigator.pushReplacementNamed(Routes.onBoardingRoot);
+                      Future.delayed(Duration(seconds: 5),(){
+                        _navigator.pushReplacementNamed(Routes.onBoardingRoot);
+
+                      });
+
                          break;
                     case AuthenticationStatus.unknown:
                     default:
-                        _navigator.pushReplacementNamed(Routes.unDefineRoute);
+                     Future.delayed(Duration(seconds: 5),(){
+                       _navigator.pushReplacementNamed(Routes.unDefineRoute);
+
+                     });
 
                   }
                 })

@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.8+8
+version: 1.0.10+10
 
 environment:
   sdk: ">=2.17.5 <3.0.0"
@@ -97,26 +97,26 @@ dev_dependencies:
 
 flutter_native_splash:
   fill: true
-  color: "#43d4db"
+  color: "#2e3293"
   image: assets/images/splash.png
   branding: assets/images/brand.png
-  color_dark: "#43d4db"
+  color_dark: "#2e3293"
   image_dark: assets/images/splash.png
   branding_dark: assets/images/brand.png
 
   android_12:
     image: assets/images/splash.png
-    icon_background_color: "#43d4db"
+    icon_background_color: "#2e3293"
     image_dark: assets/images/brand.png
-    icon_background_color_dark: "#43d4db"
+    icon_background_color_dark: "#2e3293"
 
   web: false
 
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  adaptive_icon_background: "#1d8586"
-  image_path: "assets/images/splash.png"
+  adaptive_icon_background: "#000000"
+  image_path: "assets/images/logo.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
 
 

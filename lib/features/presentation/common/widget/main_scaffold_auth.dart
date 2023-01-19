@@ -45,9 +45,15 @@ class MainScaffold extends StatelessWidget {
 
               resizeToAvoidBottomInset: false,
               body: Container(
-                decoration:const BoxDecoration(
-                    image: DecorationImage(image: AssetImage(ImagesAssetsManage.backImages,),fit: BoxFit.fill),
-                ),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+
+                      end: Alignment.topRight,
+                      colors: <Color>[ColorManager.primaryColor, ColorManager.primaryColorgreen]),
+
+
+                  ),
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height,
                 child: Stack(

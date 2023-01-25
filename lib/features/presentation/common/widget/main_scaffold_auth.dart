@@ -63,15 +63,10 @@ class _MainScaffoldState extends State<MainScaffold> {
 
               resizeToAvoidBottomInset: false,
               body: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-
-                      end: Alignment.topRight,
-                      colors: <Color>[ColorManager.primaryColor, ColorManager.primaryColorgreen]),
+                decoration:
+                  const BoxDecoration(image: DecorationImage(image: AssetImage(ImagesAssetsManage.backImages,),fit: BoxFit.fill),),
 
 
-                  ),
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height,
                 child: Stack(

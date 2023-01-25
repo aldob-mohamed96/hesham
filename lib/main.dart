@@ -40,12 +40,10 @@ void main() async {
    const AppMaterial(),
   );
 
- // disableScreen();
+await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
 
 }
-disableScreen()async{
-  await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
-}
+
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async =>NotificationCubit().showNotification(message);
 class AppMaterial extends StatelessWidget {
@@ -104,7 +102,7 @@ class _AppMaterialsState extends State<AppMaterials>
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
-      final theme = context.select((ThemeCubit themeCubit) => themeCubit.state.themeMode);
+
       final local = context.select((LangaugeCubit langaugeCubit) => langaugeCubit.state.locale);
 
       return MaterialApp(
@@ -115,19 +113,19 @@ class _AppMaterialsState extends State<AppMaterials>
                 listener: (cont, state) async {
                   switch (state.authenticationStatus) {
                     case AuthenticationStatus.authenticated:
-                          Future.delayed(Duration(seconds: 5),(){
+                          Future.delayed(const Duration(seconds: 5),(){
                             _navigator.pushReplacementNamed(Routes.homeRoot);
 
                           });
                          break;
                     case AuthenticationStatus.unauthenticated:
-                        Future.delayed(Duration(seconds: 5),(){
+                        Future.delayed(const Duration(seconds: 5),(){
                           _navigator.pushReplacementNamed(Routes.loginRoot);
 
                         });
                          break;
                     case AuthenticationStatus.firstTimeAppOpened:
-                      Future.delayed(Duration(seconds: 5),(){
+                      Future.delayed(const Duration(seconds: 5),(){
                         _navigator.pushReplacementNamed(Routes.onBoardingRoot);
 
                       });
@@ -135,7 +133,7 @@ class _AppMaterialsState extends State<AppMaterials>
                          break;
                     case AuthenticationStatus.unknown:
                     default:
-                     Future.delayed(Duration(seconds: 5),(){
+                     Future.delayed(const Duration(seconds: 5),(){
                        _navigator.pushReplacementNamed(Routes.unDefineRoute);
 
                      });
@@ -155,7 +153,7 @@ class _AppMaterialsState extends State<AppMaterials>
         localizationsDelegates: AppLocalizationsSetup.localizationsDelegates,
         localeResolutionCallback: AppLocalizationsSetup.localeResolutionCallBack,
         theme: instance<ThemeManager>().getLightTheme,
-        darkTheme: instance<ThemeManager>().getLightTheme,
+
       );
     });
   }

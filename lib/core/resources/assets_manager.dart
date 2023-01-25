@@ -21,6 +21,8 @@ class JsonAssetManager {
   static const String maintain = "$assetJsonPath/maintain.json";
   static const String splash = "$assetJsonPath/splash.json";
   static const String lottieEmpty = "$assetJsonPath/empty.json";
+  static const String lottieLoading = "$assetJsonPath/load.json";
+  static const String lottieEmptyHome = "$assetJsonPath/emptyHome.json";
   static const String lottieHome = "$assetJsonPath/loadHome.json";
   static const String lottieErrorDialog = "$assetJsonPath/error5.json";
   static const String lottieErrorFullScreen = "$assetJsonPath/error4.json";

@@ -42,14 +42,14 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
 
     if(state.isFirst==true)
     {
-      emit(state.copyWith(isLoading: true));
+      emit(state.copyWith(isLoading: true,isFailure: false));
       final result=await _contactUseCase.execute(lessonRequest);
 
       result.fold(
               (failure) =>  emit(state.copyWith(isLoading: false,failure: failure,isFailure: true)),
               (notes)
           {
-            return emit(state.copyWith(isLoading: false,noteOrdersData:notes.noteOrdersData ,hasReachedMax:notes.noteOrdersData.total==notes.noteOrdersData.to ,isFirst: false));
+            return emit(state.copyWith(isFailure: false,isLoading: false,noteOrdersData:notes.noteOrdersData ,hasReachedMax:notes.noteOrdersData.total==notes.noteOrdersData.to ,isFirst: false));
 
           });
     }
@@ -76,7 +76,7 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
                 notes.noteOrdersData.lastPage,
                 notes.noteOrdersData.to,
                 notes.noteOrdersData.total,
-              ),hasReachedMax: notes.noteOrdersData.total==notes.noteOrdersData.to ,));
+              ),hasReachedMax: notes.noteOrdersData.total==notes.noteOrdersData.to ,isFailure: false));
             }
 
 
@@ -88,7 +88,7 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
   }
   void _onRefreshMaintain(RefreshNote event,Emitter<NoteState> emit)async{
     {
-      emit(state.copyWith(isLoading: true));
+      emit(state.copyWith(isLoading: true,isFailure: false));
 
       lessonRequest.id=1;
       final result=await _contactUseCase.execute(lessonRequest);
@@ -98,7 +98,7 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
           {
             var maintains=List.of(state.noteOrdersData.noteOrder)..clear()..addAll(notes.noteOrdersData.noteOrder);
 
-            return emit(state.copyWith(isLoading: false,
+            return emit(state.copyWith(isLoading: false,isFailure: false,
                 noteOrdersData: NoteOrdersData(
                   maintains,
                   notes.noteOrdersData.currentPage,

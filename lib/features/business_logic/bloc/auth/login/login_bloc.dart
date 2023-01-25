@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:hesham/core/enum/enums.dart';
 import 'package:hesham/core/extension/extension.dart';
 import 'package:hesham/core/resources/app_constant.dart';
@@ -10,13 +11,14 @@ import 'package:hesham/features/domain/usecases/app_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 import 'package:path/path.dart';
+
 import '../../../../../core/input_form_validation/input_model.dart';
 import '../../../../domain/entities/failure.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
 
-class LoginBloc extends Bloc<LoginEvent, LoginState> {
+class LoginBloc extends Bloc<LoginEvent, LoginState>   {
   final LoginUseCase _loginUseCase;
 
 
@@ -35,17 +37,24 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   {
 
     emit(state.copyWith(
+
       isVisible:!state.isVisible,
-      password: state.password
+      password: state.password,
+      username: state.username,
+      status: Formz.validate([state.password,state.username]),
     ));
 
   }
+
+
+
+
   void _onPasswordChanged(PasswordChanged event, Emitter<LoginState> emit,) {
     final password = Password.dirty(event.password);
     emit(
       state.copyWith(
         password: password,
-        status: Formz.validate([password]),
+        status: Formz.validate([password,state.username]),
       ),
     );
   }
@@ -54,7 +63,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(
       state.copyWith(
         username: username,
-        status: Formz.validate([username]),
+        status: Formz.validate([state.password,username]),
       ),
     );
   }

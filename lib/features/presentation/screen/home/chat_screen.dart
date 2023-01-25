@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:chat_bubbles/bubbles/bubble_special_three.dart';
+import 'package:chat_bubbles/date_chips/date_chip.dart';
+import 'package:chat_bubbles/message_bars/message_bar.dart';
 import 'package:hesham/core/enum/enums.dart';
 import 'package:hesham/core/extension/extension.dart';
 import 'package:hesham/core/resources/strings_manager.dart';
@@ -9,11 +11,14 @@ import 'package:hesham/features/presentation/common/widget/main_scaffold_auth.da
 import 'package:hesham/features/presentation/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../../core/di/dependency_injection.dart';
+import '../../../../core/resources/app_constant.dart';
 import '../../../../core/resources/assets_manager.dart';
 import '../../../../core/resources/color_manager.dart';
 import '../../../../core/resources/font_manager.dart';
+import '../../../../core/resources/style_manager.dart';
 import '../../../../core/resources/values_manager.dart';
 import '../../../business_logic/bloc/maintain/maintain_bloc.dart';
 import '../../../business_logic/cubit/langauge/localization/app_localizations.dart';
@@ -30,29 +35,10 @@ class MaintainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(AppPadding.appPadding0),
-        child:MultiBlocProvider(
-          providers: [
-            BlocProvider(create: (_) =>  instance<MaintainBloc>()..add(FetchingMaintain())),
-
-
-          ], child:Scaffold(
-            floatingActionButton: FloatingActionButton(onPressed: (){
-
-              Navigator.of(context).pushNamed(Routes.addContact);
-
-            } ,child:Icon(Icons.chat, color: ColorManager.whiteColor,),
-            ),
-            appBar: AppBar(
-
-              backgroundColor: ColorManager.primaryColor,
-              automaticallyImplyLeading: false,
-              centerTitle: true,
-                title:SizedBox(
-                  width: context.width/2,
-                  child: Image.asset(ImagesAssetsManage.logoImages),)),
-            body: const MaintainContent()),));
+    return HomeScaffold(
+        widget:
+           BlocProvider(create: (_) =>  instance<MaintainBloc>()..add(FetchingMaintain()),
+           child:const MaintainContent()));
   }
 }
 
@@ -73,22 +59,46 @@ class _MaintainContentState extends State<MaintainContent> {
   }
   @override
   Widget build(BuildContext context) {
-    return  BlocBuilder<MaintainBloc, MaintainState>(
-      builder: (context, state) {
-        return SingleChildScrollView(
+    return  BlocConsumer<MaintainBloc, MaintainState>(
+      listener: (context,state){
+        if(state.isLoading==false&&state.isFailure==false)
+        {
 
-          child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: AppPadding.appPadding20),
-              child:
-              state.isLoading?
-              const ListViewLoading() :
-              state.isFailure?
-              ErrorWidget(state: state,):
-              state.messageData.messageData.isEmpty?
-              const EmptyWidget()
-                  :
-              ListWidget(scrollController: _scrollController,state: state,)
-          ),);
+            instance<ShowMessage>().dismissDialogValue(context);
+
+
+        }
+
+        if(state.isFailure==true)
+        {
+
+
+          if (state.failure == AppConstants.maintainFailure) {
+            Navigator.pushReplacementNamed(context, Routes.maintainAppRoot);
+          }
+          else if (state.failure == AppConstants.updateFailure) {
+
+            Navigator.pushReplacementNamed(context, Routes.maintainAppRoot);
+          }
+          else if (state.failure == AppConstants.unAuthenticatedFailure) {
+            Navigator.pushReplacementNamed(context, Routes.loginRoot);
+          }
+          else
+          {
+            instance<ShowMessage>().showErrorPopUpOk(context, state.failure.message);
+          }
+
+
+        }
+
+        if(state.isLoading)
+        {
+          instance<ShowMessage>().showModal(context);
+        }
+
+      },
+      builder: (context, state) {
+       return ListWidget(scrollController: _scrollController,state: state,);
       },
     );
   }
@@ -139,7 +149,7 @@ class ListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: context.width,
-      height: context.height-AppSize.appSize20,
+      height: context.height*AppSize.appSize0_85,
       child: RefreshIndicator(
         displacement: AppSize.appSize100,
         backgroundColor: ColorManager.secondColor,
@@ -150,22 +160,59 @@ class ListWidget extends StatelessWidget {
           Future.delayed(Duration.zero,()=>
               context.read<MaintainBloc>().add(RefreshMaintain()));
         },
-        child: SizedBox(
-          height: context.height,
-          width: context.width,
-          child: ListView.builder(
-            padding:const EdgeInsets.only(bottom: AppSize.appSize50,),
-            physics:const AlwaysScrollableScrollPhysics(),
-            itemBuilder: (BuildContext context, int index) {
-              log(state.messageData.messageData.length.toString());
-              return index >= state.messageData.messageData.length
-                  ?  const BottomLoader()
-                  : OrderCardItem(messagesChat:state.messageData.messageData[index],);
-            },
-            itemCount: state.hasReachedMax
-                ? state.messageData.messageData.length
-                : state.messageData.messageData.length + 1,
-            controller: _scrollController,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+
+              state.messages.isNotEmpty?
+              SizedBox(
+                height: (context.height*AppSize.appSize0_85)-100,
+                width: context.width,
+                child: ListView.builder(
+
+
+                  physics:const AlwaysScrollableScrollPhysics(),
+                  itemBuilder: (BuildContext context, int index) {
+
+                    return index >= state.messages.length
+                        ?  const BottomLoader()
+                        : OrderCardItem(messagesChat:state.messages[index],);
+                  },
+                  itemCount: state.hasReachedMax
+                      ? state.messages.length
+                      : state.messages.length + 1,
+                  controller: _scrollController,
+                ),
+              ):
+              SizedBox(
+                height: (context.height*AppSize.appSize0_85)-100,
+                width: context.width,
+                child:Column(
+                  children: [
+                    SizedBox(
+                      child: Lottie.asset(JsonAssetManager.lottieEmptyHome),),
+                    Text(AppLocalizationsImpl.of(context)!.translate(AppStrings.emptyContent),textAlign: TextAlign.center,style:
+                    getRegularStyle(color: ColorManager.whiteColor,fontSize: FontSize.fontSize16,),)
+                  ],
+                ),
+              ),
+
+              SizedBox(
+                height: AppSize.appSize100,
+
+                child: MessageBar(
+                  messageBarColor: Colors.white,
+                  sendButtonColor: Colors.blue,
+                  onSend: (value) {
+                    context.read<MaintainBloc>().add(SendMaintain(value));
+
+                  },
+
+                ),
+              ),
+
+            ],
           ),
         ),
       ),
@@ -191,21 +238,35 @@ class ErrorWidget extends StatelessWidget {
 }
 class OrderCardItem extends StatelessWidget {
 
-  final MessagesChat messagesChat;
+  final MessagesItem messagesChat;
 
-  OrderCardItem({Key? key,required this.messagesChat}) : super(key: key);
+  const OrderCardItem({Key? key,required this.messagesChat}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    DateTime date=DateTime.parse(messagesChat.createdAt);
+    return Column(
+      children: [
+        DateChip(
 
-    return SizedBox(child:ExpansionTile(
-      title: Text(messagesChat.message,style: TextStyle(color: ColorManager.blackColor),),
-      subtitle:  Text(messagesChat.createdAt,style: TextStyle(fontSize: 10,color: ColorManager.grayColor300),),
-      children: messagesChat.replies.map((e) =>ListTile(title: Text(e.content,style: TextStyle(color: ColorManager.primaryColor,fontSize: 12))),).toList(),
-      onExpansionChanged: (bool expanded) {
+          date:date,
+          color: Colors.grey,
 
-      },
-    ),);
+        ),
+        BubbleSpecialThree(
+
+          isSender:  messagesChat.isSender,
+          text: messagesChat.message,
+          color:ColorManager.whiteColor,
+          tail: true,
+
+          textStyle:const TextStyle(
+              color: Colors.black,
+              fontSize: 12
+          ),
+        ),
+      ],
+    ) ;
   }
 
   }

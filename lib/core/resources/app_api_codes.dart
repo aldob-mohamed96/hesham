@@ -1,6 +1,14 @@
 class ApiInternalStatusCode{
+  static const int failure=0;
   static const int success=1;
-  static const int failure=2;
+  static const int maintain=2;
+  static const int unAuthenticated=3;
+
+
+}
+class ApiInternalStatusLocationCode{
+  static const String ok="OK";
+  static const String error="error";
 
 }
 class ResponseCode
@@ -68,12 +76,28 @@ class ResponseCode
   static const int onGetDetailsNotificationError=5007;
 
   //auth Error
-  static const int authAccountDeleted = 6001;
-  static const int authAccountBlocked = 6002;
-  static const int authVerificationCodeNotSend = 6003;
-  static const int authLoginInvalidData = 6004;
-  static const int authThisDataExists = 6005;
 
+  static const int maintainApp = 999999;
+  static const int updateApp = 888888;
+  static const int unAuthenticated = 777777;
+  static const int pendingAccount = 666666;
+
+  static const int authAccountDeleted = 100001;
+  static const int authAccountBlocked = 100002;
+  static const int authVerificationCodeNotSend = 100003;
+  static const int authLoginInvalidData = 100004;
+  static const int maintenanceNotAdded = 100005;
+  static const int authThisDataExistsRegister = 100006;
+  static const int authRegisterError = 100007;
+  static const int notExistAccount = 100008;
+  static const int missMatchPassword = 100009;
+  static const int tripNotExist = 100010;
+  static const int notEnoughMoney = 100011;
+  static const int transferDataNotCorrect = 100012;
+  static const int dataNotCorrect14 = 100014;
+  static const int dataNotCorrect15 = 100015;
+  static const int dataNotCorrect16 = 100016;
+  static const int dataNotCorrect17 = 100017;
 
 
 

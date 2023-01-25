@@ -148,8 +148,9 @@ _cardGrid(BuildContext context,Attachments courses){
           borderRadius:const BorderRadius.all(Radius.circular(AppSize.appSize10)),
           gradient: LinearGradient(
             colors: [
-              ColorManager.primaryColorLight,
-              ColorManager.primaryColor,
+              ColorManager.whiteColor,
+              ColorManager.primaryColorgreen,
+
 
             ],
             begin: Alignment.topLeft,

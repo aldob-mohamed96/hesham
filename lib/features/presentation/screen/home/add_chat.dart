@@ -1,5 +1,4 @@
 
-import 'package:chat_bubbles/bubbles/bubble_special_three.dart';
 import 'package:hesham/core/enum/enums.dart';
 import 'package:hesham/core/extension/extension.dart';
 import 'package:hesham/core/resources/strings_manager.dart';
@@ -29,21 +28,9 @@ class AddMaintainScreen extends StatelessWidget {
   TextEditingController textEditingController= TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(AppPadding.appPadding0),
-        child: BlocProvider(create: (_) =>  instance<MaintainBloc>(), child:Scaffold(
-
-            appBar: AppBar(
-
-                backgroundColor: ColorManager.primaryColor,
-                automaticallyImplyLeading: false,
-                centerTitle: true,
-                 title:SizedBox(
-              width: context.width/2,
-              child: Image.asset(ImagesAssetsManage.logoImages),)
-            ),
-            body:SingleChildScrollView(
-              child: BlocListener<MaintainBloc, MaintainState>(
+                return HomeScaffold(
+                widget: BlocProvider(create: (_) =>  instance<MaintainBloc>(), child:
+                BlocListener<MaintainBloc, MaintainState>(
                 listener: (context, state) {
                   if(state.isLoading==false)
                   {
@@ -65,17 +52,15 @@ class AddMaintainScreen extends StatelessWidget {
                       Navigator.of(context,rootNavigator: true).pushNamed(Routes.contact);
                     }
                 },
-                child: SizedBox(
-
+                child: SingleChildScrollView(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+
                     children: [
 
 
                       SizedBox(
                           width: context.width ,
-                          height: context.height * .25,
+                       //   height: context.height * .25,
                           child: TextField(
                             controller: textEditingController,
                             maxLines: 10,
@@ -93,8 +78,8 @@ class AddMaintainScreen extends StatelessWidget {
                           )),
 
                       BlocBuilder<MaintainBloc, MaintainState>(
-  builder: (context, state) {
-    return Container(
+                         builder: (context, state) {
+                         return Container(
                         height: context.height * .1,
                         width: context.width * .8,
                         padding:const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -115,6 +100,6 @@ class AddMaintainScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            )),  ));
+            ));
   }
 }

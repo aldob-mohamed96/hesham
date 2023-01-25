@@ -65,7 +65,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     emit(state.copyWith(statePage: StatePage.loading));
     final result=await sheetUseCase.execute(SheetRequest(event.lesson.id, event.file));
-    result.fold((failure) => emit(state.copyWith(failure:failure,statePage: StatePage.error)), (homeData)=> emit(state.copyWith(statePage: StatePage.data,)));
+    result.fold((failure) => emit(state.copyWith(failure:failure,statePage: StatePage.error)), (homeData)=> emit(state.copyWith(statePage: StatePage.data,isUploaded: true)));
 
 
   }

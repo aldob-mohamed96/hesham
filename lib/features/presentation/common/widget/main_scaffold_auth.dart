@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
  import 'package:hesham/core/enum/enums.dart';
 import 'package:hesham/core/extension/extension.dart';
 import 'package:hesham/core/resources/color_manager.dart';
@@ -8,6 +9,7 @@ import 'package:hesham/core/resources/values_manager.dart';
  import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hesham/features/presentation/screen/home/drawer.dart';
 
 import '../../../../core/di/dependency_injection.dart';
 import '../../../../core/resources/app_constant.dart';
@@ -23,7 +25,7 @@ import '../../routes/app_routes.dart';
 import 'arrow_back_icon.dart';
 import 'icon_langauge.dart';
 
-class MainScaffold extends StatelessWidget {
+class MainScaffold extends StatefulWidget {
   final Widget widget;
 
   const MainScaffold({
@@ -31,6 +33,22 @@ class MainScaffold extends StatelessWidget {
     required this.widget,
   }) : super(key: key);
 
+  @override
+  State<MainScaffold> createState() => _MainScaffoldState();
+}
+
+class _MainScaffoldState extends State<MainScaffold> {
+  @override
+  void initState(){
+    disableScreen();
+
+    super.initState();
+
+
+  }
+  disableScreen()async{
+    await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+  }
   @override
   Widget build(BuildContext context) {
     final mediaQueryData = MediaQuery.of(context);
@@ -65,7 +83,7 @@ class MainScaffold extends StatelessWidget {
                         top: 50,
                         child:IconButtonLangauge()
                     ),
-                    SafeArea(child: widget),
+                    SafeArea(child: widget.widget),
                   ],
                 ),
               ),
@@ -84,12 +102,96 @@ class HomeScaffold extends StatefulWidget {
   State<HomeScaffold> createState() => _HomeScaffoldState();
 }
 
-class _HomeScaffoldState extends State<HomeScaffold>  with SingleTickerProviderStateMixin {
+class _HomeScaffoldState extends State<HomeScaffold>   {
+
+  final GlobalKey<ScaffoldState> _scaffoldKey =  GlobalKey<ScaffoldState>();
+
+  @override
+  void initState(){
+    disableScreen();
+
+
+    super.initState();
+
+
+  }
+ disableScreen()async{
+   await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+ }
+  @override
+  Widget build(BuildContext context) {
+    final mediaQueryData = MediaQuery.of(context);
+    final num constrainedTextScaleFactor = mediaQueryData.textScaleFactor.clamp(0.5, 1.0);
+    return MediaQuery(data: mediaQueryData.copyWith(textScaleFactor: constrainedTextScaleFactor as double?),
+        child: WillPopScope(
+          onWillPop: ()async=>true,
+          child: Scaffold(
+            key: _scaffoldKey,
+            drawer:const DrawerData(),
+            body: Container(
+             height: context.height,
+             width: context.width,
+             decoration:const BoxDecoration(image: DecorationImage(image: AssetImage(ImagesAssetsManage.backImages,),fit: BoxFit.fill),),
+
+             child:  SingleChildScrollView(
+               child: Column(children: [
+                 SizedBox(
+                     height: context.height*AppSize.appSize0_15,
+                     child: Header(globalKey:_scaffoldKey ,))
+                 ,
+                 SizedBox(
+                     height: context.height*AppSize.appSize0_85,
+                     child: widget.widget)
+
+               ],),
+             )),
+          )
+
+        ));
+  }
+}
+class Header extends StatelessWidget {
+  final GlobalKey<ScaffoldState> globalKey;
+  const Header({Key? key,required this.globalKey}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return   Container(
+      padding:const EdgeInsets.all(15),
+      height: context.height*AppSize.appSize0_15,
+      width: context.width,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Image.asset(ImagesAssetsManage.logoImages,width:AppSize.appSize150,),
+          const NotificationIcon(),
+          GestureDetector(child:const Icon(Icons.menu,color: Colors.white,),onTap: (){
+            globalKey.currentState!.openDrawer();
+          },)
+        ],),
+    );
+  }
+}
+
+
+class HomeScaffoldInternal extends StatefulWidget {
+  final Widget widget;
+
+  const HomeScaffoldInternal({
+    Key? key,
+    required this.widget,
+  }) : super(key: key);
+
+  @override
+  State<HomeScaffoldInternal> createState() => _HomeScaffoldInternal();
+}
+
+class _HomeScaffoldInternal extends State<HomeScaffoldInternal>  with SingleTickerProviderStateMixin {
  late Animation<double> _animation;
  late AnimationController _animationController;
   @override
   void initState(){
-
+    disableScreen();
     _animationController = AnimationController(
       vsync: this,
       duration:const Duration(milliseconds: 260),
@@ -103,6 +205,9 @@ class _HomeScaffoldState extends State<HomeScaffold>  with SingleTickerProviderS
 
 
   }
+ disableScreen()async{
+   await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+ }
   @override
   Widget build(BuildContext context) {
     final mediaQueryData = MediaQuery.of(context);
@@ -117,51 +222,12 @@ class _HomeScaffoldState extends State<HomeScaffold>  with SingleTickerProviderS
           appBar: AppBar(
             elevation: 0,
 
-             title: SizedBox(child: Image.asset(ImagesAssetsManage.logoImages),),
+             title: SizedBox(child: Image.asset(ImagesAssetsManage.logoImages,width: context.width/2,),),
             centerTitle: true,
-            automaticallyImplyLeading: false,
-            leading:BlocBuilder<HomeBloc, HomeState>(
-              builder: (context, state) {
-                User user= context.select((AuthenticationBloc auth) => auth.user);
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                     Icon(Icons.person,color: ColorManager.whiteColor,size: 20,),
-
-                    Text(AppLocalizationsImpl.of(context)!.translate(user.name), textAlign: TextAlign.center,style:Theme.of(context).textTheme.bodyText2!.copyWith(color: ColorManager.whiteColor,fontSize: FontSize.fontSize10,overflow: TextOverflow.ellipsis)),
+            automaticallyImplyLeading: true,
+            backgroundColor: ColorManager.primaryColor,),
 
 
-
-                  ],
-                );
-              },
-            ),
-            backgroundColor: ColorManager.primaryColor,
-            actions: [
-              NotificationIcon(),
-              PopupMenuButton(
-                iconSize: AppSize.appSize20,
-                onSelected: (value) {
-
-                },
-                shape:const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(8.0),
-                    bottomRight: Radius.circular(8.0),
-                    topLeft: Radius.circular(8.0),
-                    topRight: Radius.circular(8.0),
-                  ),
-                ),
-                itemBuilder: (ctx) => [
-                  _buildPopupMenuItemLang(),
-                  _buildPopupMenuItemSupport(),
-                  _buildPopupMenuItemLogout()
-
-                ],
-              )
-            ],
-          ),
-          resizeToAvoidBottomInset: false,
           body: Container(child: widget.widget,
         ),
 
@@ -210,6 +276,26 @@ class _HomeScaffoldState extends State<HomeScaffold>  with SingleTickerProviderS
 
          ),
          Text(AppLocalizationsImpl.of(context)!.translate(AppStrings.logout),style: const TextStyle(fontSize: 12),),
+
+       ],
+     ),
+   );
+ }
+ PopupMenuItem _buildPopupMenuItemDeleteAccount() {
+   return PopupMenuItem(
+     onTap: ()async{
+       context.read<HomeBloc>().add(const LogoutEvent());
+     },
+     child: Row(
+       mainAxisAlignment: MainAxisAlignment.spaceAround,
+       children: [
+         Icon(
+           Icons.remove_circle,
+           color: ColorManager.primaryColor,
+           size: 20,
+
+         ),
+         Text(AppLocalizationsImpl.of(context)!.translate(AppStrings.deleteAccount),style: const TextStyle(fontSize: 12),),
 
        ],
      ),
@@ -331,15 +417,18 @@ class NotificationIcon extends StatelessWidget {
               badgeColor: Colors.red,
               animationType: BadgeAnimationType.slide,
               animationDuration:const Duration(seconds: AppValue.appValue1),
-              child: IconButton(
-                icon: Icon(Icons.notification_important, color: ColorManager.whiteColor,size: AppSize.appSize30,),
-                onPressed: () {
+              child: GestureDetector(
+                onTap: () {
                   SchedulerBinding.instance.addPostFrameCallback((_) {
                     instance<NotificationCubit>().clearNotification();
                     Navigator.of(context).pushNamed(Routes.notes);
                   });
                 },
+                child: Icon(
+                   Icons.notification_important, color: ColorManager.whiteColor,size: AppSize.appSize30,),
               ),
+
+
             );
           },
         ),

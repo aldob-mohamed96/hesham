@@ -62,11 +62,29 @@ class ResponseMessage
   static const String onDidReceiveNotificationError=AppStrings.onDidReceiveNotificationError;
   static const String onGetDetailsNotificationError=AppStrings.onGetDetailsNotificationError;
   //auth error
+
   static const String authAccountDeleted = AppStrings.authAccountDeleted;
   static const String authAccountBlocked = AppStrings.authAccountDeleted;
   static const String authVerificationCodeNotSend = AppStrings.authAccountDeleted;
   static const String authLoginInvalidData = AppStrings.authLoginInvalidData;
   static const String authThisDataExists = AppStrings.authThisDataExists;
+  //general app error
+  static const String notEnoughMoney =AppStrings.notEnoughMoney;
+  static const String transferTypeNotCorrect =AppStrings.transferTypeNotCorrect ;
+  static const String transferPhoneNumberNotCorrect = AppStrings.transferPhoneNumberNotCorrect;
+  static const String yourDataInvalid = AppStrings.yourDataInvalid;
+
+  static const String maintenanceNotAdded = AppStrings.maintenanceNotAdded;
+  static const String authRegisterError = AppStrings.authRegisterError;
+  static const String authAccountDataErrorNotFound = AppStrings.authAccountDataErrorNotFound;
+  static const String missMatchPassword = AppStrings.missMatchPassword;
+  static const String tripNotExist = AppStrings.tripNotExist;
+  static const String transferDataNotCorrect = AppStrings.transferDataNotCorrect;
+  static const String dataNotCorrect14 = AppStrings.dataNotCorrect14;
+  static const String dataNotCorrect15 = AppStrings.dataNotCorrect15;
+  static const String dataNotCorrect16 = AppStrings.dataNotCorrect16;
+  static const String dataNotCorrect17 = AppStrings.dataNotCorrect17;
+
 
 
 }

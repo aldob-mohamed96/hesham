@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:hesham/features/business_logic/bloc/note/note_bloc.dart';
 import 'package:hesham/features/domain/entities/note.dart';
-import 'package:chat_bubbles/bubbles/bubble_special_three.dart';
 import 'package:hesham/core/enum/enums.dart';
 import 'package:hesham/core/extension/extension.dart';
 import 'package:hesham/core/resources/strings_manager.dart';
@@ -26,25 +25,13 @@ class NoteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(AppPadding.appPadding0),
-        child:MultiBlocProvider(
+    return HomeScaffold(
+        widget:MultiBlocProvider(
           providers: [
             BlocProvider(create: (_) =>  instance<NoteBloc>()..add(FetchingNote())),
 
 
-          ], child:Scaffold(
-
-            appBar: AppBar(
-
-                backgroundColor: ColorManager.primaryColor,
-                automaticallyImplyLeading: false,
-                centerTitle: true,title:
-            SizedBox(
-              width: context.width/2,
-              child: Image.asset(ImagesAssetsManage.logoImages),)
-            ),
-            body: const NoteContent()),));
+          ], child:NoteContent()));
   }
 }
 
@@ -224,13 +211,13 @@ class OrderCardItem1 extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const SizedBox(width: AppSize.appSize10,),
+                  const SizedBox(width: AppSize.appSize6,),
                   CircleAvatar(backgroundColor:ColorManager.primaryColor,child: Text(noteOrder.id.toString(),style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: FontSize.fontSize8,fontWeight: FontWeightManager.medium,color: ColorManager.whiteColor),),radius: AppSize.appSize20,)
-                  , const SizedBox(width: AppSize.appSize10,),
+                  , const SizedBox(width: AppSize.appSize6,),
 
                   SizedBox(width: context.width/2,child:
                   ListTile(
-                      title: Text(noteOrder.title,style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: ColorManager.primaryColor,fontSize:FontSize.fontSize16),),
+                      title: Text(noteOrder.title,style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: ColorManager.primaryColor,fontSize:FontSize.fontSize14),),
                       subtitle: Text(noteOrder.description,style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: Colors.grey,fontSize:FontSize.fontSize10),)))
 
                 ],),

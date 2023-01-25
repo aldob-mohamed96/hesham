@@ -1,6 +1,7 @@
 class AppStrings {
   //app Setting
   static const String appName = "app_name";
+  static const String home = "home";
   static const String defaultUserName = "default_user_name";
   static const String defaultAppCurrency = "default_app_currency";
   static const String balance = "balance";
@@ -15,6 +16,10 @@ class AppStrings {
   static const String retryAgain = "retry_again";
   static const String ok = "ok";
   static const String dismiss = "dismiss";
+  static const String dataNotCorrect14 = "dataNotCorrect14";
+  static const String dataNotCorrect15 = "dataNotCorrect15";
+  static const String dataNotCorrect16 = "dataNotCorrect16";
+  static const String dataNotCorrect17 = "dataNotCorrect17";
 
   //input filed
   static const String username = "username";
@@ -272,6 +277,144 @@ class AppStrings {
   static const String authPasswordChangedSuccess = "auth_password_changed_success";
   static const String authPhoneChangedSuccess = "auth_phone_changed_success";
   static const String authEmailChangedSuccess = "auth_email_changed_success";
+
+
+
+  //state page render
+  static const String updateAppMessage = "update_app_message";
+
+  static const String updateApp = "update_app";
+  static const String discount = "discount";
+
+  static const String driverPhone = "driver_phone";
+  static const String driverName = "driver_name";
+  static const String cityNameDrop = "city_name_drop";
+
+
+  static const String cancelOrder = "cancel_order";
+
+  //input filed
+
+  static const String startTrip = "start_trip";
+  static const String endTrip = "end_trip";
+  static const String acceptOrder = "accept_order";
+  static const String acceptedSuccess = "accept_success";
+  static const String acceptedFailure = "accept_failure";
+
+  static const String finish = "finish";
+  static const String skip = "skip";
+
+  static const String taxiJawab = "taxi_jawab";
+  static const String boardingPage1 = "boardingPage1";
+  static const String boardingPage2 = "boardingPage2";
+  static const String boardingPage3 = "boardingPage3";
+  //
+
+
+  //images hint
+
+  //screen add maintain_app
+
+
+
+
+
+
+
+
+  //bottom Sheet
+
+
+  //camera
+
+  //title page
+
+
+  static const String myRequestCity= "my_Request_city";
+  static const String notification= "notification";
+
+
+  static const String orderWaitingTime= "waiting_time";
+  static const String minutes= "minutes";
+  static const String confirmStartPoint= "confirm_start_point";
+  static const String startPoint= "start_point";
+  static const String myLocation= "my_location";
+  static const String confirmEndPoint= "confirm_end_point";
+  static const String endPoint= "end_point";
+  static const String search= "search";
+  static const String confirm= "confirm";
+
+
+
+
+  static const String orderNoEndLocationTripFree= "order_no_end_location_trip_free";
+
+  static const String totalCostPaidToDriver= "total_cost_paid_to_driver";
+
+  static const String selectTypeTransfer= "select_type_transfer";
+  static const String driver= "driver";
+  static const String rider= "rider";
+  static const String moneyStill= "moneyStill";
+  static const String moneyTransfer= "moneyTransfer";
+
+
+  static const String pleaseWaiting= "please_waiting";
+
+
+
+
+
+
+
+
+  static const String soon = 'soon';
+
+
+
+
+
+  static const String notEnoughMoney = "not_enough_money";
+  static const String transferTypeNotCorrect = "transfer_type_not_correct";
+  static const String transferPhoneNumberNotCorrect = "transfer_phone_number_not_correct";
+  static const String yourDataInvalid = "your_data_invalid";
+  static const String sendMessage = "send_message";
+  static const String maintenanceNotAdded = "maintenance_not_added";
+  static const String authRegisterError = "auth_register_error";
+  static const String authAccountDataErrorNotFound = "auth_account_data_error_not_found";
+  static const String missMatchPassword = "miss_match_password";
+  static const String tripNotExist = "trip_not_exist";
+  static const String transferDataNotCorrect = "transfer_data_not_correct";
+
+
+
+
+  static const String note = "note";
+  static const String timeDeliveryRate = "time_Delivery_rate";
+  static const String car = "car";
+  static const String messageRatingApp = "message_rating_app";
+
+
+  static const String trackTrip = "track_trip";
+  static const String trackIdTrip = "track_id_trip";
+  static const String goingTrip = "goingTrip";
+  static const String backTimeTrip = "backTimeTrip";
+  static const String goingBackTrip = "goingBackTrip";
+  static const String rulesCityTripRequest = "rulesCityTripRequest";
+  static const String goingTripDateTime = "goingTripDateTime";
+
+  static const String days = "days";
+  static const String remaining = "remaining";
+  static const String orderSubscribe = "orderSubscribe";
+  static const String myBooking= "myBooking";
+  static const String timeGoing = "timeGoing";
+  static const String timeBack = "timeBack";
+  static const String listDateTrip = "listDateTrip";
+  static const String counter = "counter";
+  static const String goingOnly= "goingOnly";
+  static const String goingAndBack= "goingAndBack";
+
+
+
 
 
 

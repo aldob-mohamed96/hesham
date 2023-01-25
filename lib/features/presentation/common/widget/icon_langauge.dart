@@ -34,7 +34,7 @@ class PopUpButton extends StatelessWidget {
           return List.generate(AppConstants.supportedLocales.length, (index) {
             return PopupMenuItem<LangaugeCode>(
               value:AppConstants.supportedLocales.elementAt(index).languageCode.getLangaugeCode() ,
-              child: Text(AppLocalizationsImpl.of(context)!.translate(AppConstants.supportedLocales.elementAt(index).languageCode.toString()),style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: ColorManager.secondColor),),
+              child: Text(AppLocalizationsImpl.of(context)!.translate(AppConstants.supportedLocales.elementAt(index).languageCode.toString()),textAlign: TextAlign.center,style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: ColorManager.secondColor),),
             );
           });
         },

@@ -20,9 +20,9 @@ class UrlLauncherException implements Exception {
       failure = _handleLaunchUrlError(error);
     }
     else if(error is FormatException)
-      {
-        failure=DataSourceLaunchUrl.inValidUrl.getFailure();
-      }
+    {
+      failure=DataSourceLaunchUrl.inValidUrl.getFailure();
+    }
     else
     {
       failure = DataSourceLaunchUrl.unKnownLauncherError.getFailure();
@@ -83,7 +83,7 @@ class TimerException implements Exception {
     {
       failure = DataSourceTimer.unknownError.getFailure();
     }
- }
+  }
 
   Failure _handleTimerError(DataSourceTimer dataSourceTimer)
   {
@@ -109,13 +109,13 @@ class NetworkException implements Exception {
   NetworkException.handleNetworkError(dynamic error){
 
     if(error is DioError)
-      {
-        failure= _handleNetworkDioFailure(error);
-      }
+    {
+      failure= _handleNetworkDioFailure(error);
+    }
     else
-      {
-        failure= DataSourceNetworkError.unknownError.getFailure();
-      }
+    {
+      failure= DataSourceNetworkError.unknownError.getFailure();
+    }
 
   }
 
@@ -128,14 +128,13 @@ class NetworkException implements Exception {
       case DioErrorType.receiveTimeout:
         return DataSourceNetworkError.recieveTimeOut.getFailure();
       case DioErrorType.response:
-        if (error.response != null &&
-            error.response?.statusCode != null &&
-            error.response?.statusMessage != null) {
-          return Failure(
-              error.response?.statusCode ??
-                  AppConstants.defaultEmptyInteger,
-              error.response?.statusMessage ??
-                  AppConstants.defaultEmptyString);
+        if (error.response != null && error.response?.statusCode != null && error.response?.statusMessage != null) {
+          if(error.response?.statusCode==401)
+            {
+              return AppConstants.unAuthenticatedFailure;
+            }
+
+          return Failure(error.response?.statusCode ?? AppConstants.defaultEmptyInteger, error.response?.statusMessage ?? AppConstants.defaultEmptyString);
         } else {
           return DataSourceNetworkError.unknownError.getFailure();
         }
@@ -160,9 +159,9 @@ class CashedException implements Exception {
   late Failure failure;
   CashedException.handleCashedError(dynamic error){
 
-   
-        failure= DataSourceNetworkError.cashError.getFailure();
-      
+
+    failure= DataSourceNetworkError.cashError.getFailure();
+
 
   }
 
@@ -205,13 +204,13 @@ class CashedException implements Exception {
 }
 class PermissionException implements Exception {
   late Failure failure;
-   PermissionException.handlePermissionError(dynamic error){
+  PermissionException.handlePermissionError(dynamic error){
 
     if(error is DataSourcePermission)
     {
       failure = _handlePermissionError(error);
     }
-     else
+    else
     {
       failure = DataSourcePermission.unknownPermissionError.getFailure();
     }
@@ -222,24 +221,24 @@ class PermissionException implements Exception {
 
   }
 
-Failure _handlePermissionError(DataSourcePermission dataSourcePermissionError)
-{
-  switch(dataSourcePermissionError)
+  Failure _handlePermissionError(DataSourcePermission dataSourcePermissionError)
   {
-    case DataSourcePermission.permissionDenied:
-       return DataSourcePermission.permissionDenied.getFailure();
-    case DataSourcePermission.permissionPermanentlyDenied:
-      return DataSourcePermission.permissionPermanentlyDenied.getFailure();
-    case DataSourcePermission.permissionRestricted:
-      return DataSourcePermission.permissionRestricted.getFailure();
-    case DataSourcePermission.checkPermissionError:
-       return DataSourcePermission.checkPermissionError.getFailure();
-    case DataSourcePermission.noImageSelected:
-       return DataSourcePermission.noImageSelected.getFailure();
-    default:
-       return DataSourcePermission.unknownPermissionError.getFailure();
+    switch(dataSourcePermissionError)
+    {
+      case DataSourcePermission.permissionDenied:
+        return DataSourcePermission.permissionDenied.getFailure();
+      case DataSourcePermission.permissionPermanentlyDenied:
+        return DataSourcePermission.permissionPermanentlyDenied.getFailure();
+      case DataSourcePermission.permissionRestricted:
+        return DataSourcePermission.permissionRestricted.getFailure();
+      case DataSourcePermission.checkPermissionError:
+        return DataSourcePermission.checkPermissionError.getFailure();
+      case DataSourcePermission.noImageSelected:
+        return DataSourcePermission.noImageSelected.getFailure();
+      default:
+        return DataSourcePermission.unknownPermissionError.getFailure();
+    }
   }
-}
 
 
 
@@ -258,7 +257,7 @@ class ErrorMessage implements Exception{
   ErrorMessage.getErrorAuth(String? codeError)
   {
 
-        failure=_getErrorAuth(codeError);
+    failure=_getErrorAuth(codeError);
 
 
 
@@ -267,16 +266,41 @@ class ErrorMessage implements Exception{
 
     switch (codeError)
     {
-      case ErrorCode.authAccountBlocked:
+      case ErrorCode.unknownError://000000
+        return const Failure(ResponseCode.unknownError,ResponseMessage.unknownError,);
+      case ErrorCode.authAccountBlocked://100001
         return const Failure(ResponseCode.authAccountBlocked,ResponseMessage.authAccountBlocked,);
-      case ErrorCode.authAccountDeleted:
+      case ErrorCode.authAccountDeleted://100002
         return const Failure(ResponseCode.authAccountDeleted,ResponseMessage.authAccountDeleted,);
-      case ErrorCode.authVerificationCodeNotSend:
+      case ErrorCode.authVerificationCodeNotSend://100003
         return const Failure(ResponseCode.authVerificationCodeNotSend,ResponseMessage.authVerificationCodeNotSend,);
-      case ErrorCode.authDataInValidData:
+      case ErrorCode.authDataInValidData://100004
         return const Failure(ResponseCode.authLoginInvalidData,ResponseMessage.authLoginInvalidData,);
-      case null:
-        default:
+      case ErrorCode.addMaintainErrorOccurred://100005
+        return const Failure(ResponseCode.maintenanceNotAdded,ResponseMessage.maintenanceNotAdded,);
+      case ErrorCode.authCreationAccountAlreadyExist://100006
+        return const Failure(ResponseCode.authThisDataExistsRegister,ResponseMessage.authThisDataExists,);
+      case ErrorCode.authErrorOccurredInRegister://100007
+        return const Failure(ResponseCode.authRegisterError,ResponseMessage.authRegisterError,);
+      case ErrorCode.authAccountNotExist://100008
+        return const Failure(ResponseCode.notExistAccount,ResponseMessage.authAccountDataErrorNotFound,);
+      case ErrorCode.passwordNotUpdated://100009
+        return const Failure(ResponseCode.missMatchPassword,ResponseMessage.missMatchPassword,);
+      case ErrorCode.tripNotExists://100010
+        return const Failure(ResponseCode.tripNotExist,ResponseMessage.tripNotExist,);
+      case ErrorCode.NoBalanceEnough://100011
+        return const Failure(ResponseCode.notEnoughMoney,ResponseMessage.notEnoughMoney,);
+      case ErrorCode.dataTransferInvalid://100012
+        return const Failure(ResponseCode.transferDataNotCorrect,ResponseMessage.transferDataNotCorrect,);
+      case ErrorCode.dataTransferInvalid14://100012
+        return const Failure(ResponseCode.dataNotCorrect14,ResponseMessage.dataNotCorrect14,);
+        case ErrorCode.dataTransferInvalid15://100012
+        return const Failure(ResponseCode.dataNotCorrect15,ResponseMessage.dataNotCorrect15,);
+        case ErrorCode.dataTransferInvalid16://100012
+        return const Failure(ResponseCode.dataNotCorrect16,ResponseMessage.dataNotCorrect16,);
+        case ErrorCode.dataTransferInvalid17://100012
+        return const Failure(ResponseCode.dataNotCorrect17,ResponseMessage.dataNotCorrect17,);
+      default:
         return const Failure(ResponseCode.unknownError,ResponseMessage.unknownError,);
 
 
@@ -284,16 +308,6 @@ class ErrorMessage implements Exception{
   }
 
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

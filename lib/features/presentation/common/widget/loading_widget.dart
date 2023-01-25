@@ -28,7 +28,7 @@ class ListViewLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: context.height*AppSize.appSize0_90,
+      height: context.height*AppSize.appSize0_80,
       width: context.width,
 
       padding: const EdgeInsets.symmetric(horizontal: AppPadding.appPadding16, vertical:  AppPadding.appPadding16),

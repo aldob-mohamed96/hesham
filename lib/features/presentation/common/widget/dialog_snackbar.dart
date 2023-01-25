@@ -127,7 +127,7 @@ class ShowMessageImpl implements ShowMessage  {
     _dismissDialog(context);
 
     ScaffoldMessenger.of(context)..clearSnackBars()..showSnackBar(SnackBar(
-      content: Text(AppLocalizationsImpl.of(context)!.translate(message)),
+      content: Text(AppLocalizationsImpl.of(context)!.translate(message),textAlign: TextAlign.center),
       backgroundColor: AppConstants.backgroundCircularSnackBar,
       behavior: SnackBarBehavior.floating,
       action: SnackBarAction(
@@ -198,7 +198,7 @@ class ShowMessageImpl implements ShowMessage  {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(AppPadding.appPadding8),
-        child: Text(AppLocalizationsImpl.of(context)!.translate(message),style:
+        child: Text(AppLocalizationsImpl.of(context)!.translate(message),textAlign: TextAlign.center,style:
         getRegularStyle(color: ColorManager.primaryColor,fontSize: FontSize.fontSize16,),),
       ),
     );
@@ -211,7 +211,7 @@ class ShowMessageImpl implements ShowMessage  {
         child: SizedBox(
             child: ElevatedButton(onPressed: (){
                 Navigator.of(context).pop();
-            }, child: Text(AppLocalizationsImpl.of(context)!.translate(AppStrings.ok),style: getRegularStyle(color: ColorManager.focusColor,fontSize: FontSize.fontSize16),))),
+            }, child: Text(AppLocalizationsImpl.of(context)!.translate(AppStrings.ok),textAlign: TextAlign.center,style: getRegularStyle(color: ColorManager.focusColor,fontSize: FontSize.fontSize16),))),
       ),
     );
   }
@@ -222,7 +222,7 @@ class ShowMessageImpl implements ShowMessage  {
         child: SizedBox(
             child: ElevatedButton(onPressed: (){
                 Navigator.of(context).pop();
-            }, child: Text(AppLocalizationsImpl.of(context)!.translate(AppStrings.dismiss),style: getRegularStyle(color: ColorManager.focusColor,fontSize: FontSize.fontSize16),))),
+            }, child: Text(AppLocalizationsImpl.of(context)!.translate(AppStrings.dismiss),textAlign: TextAlign.center,style: getRegularStyle(color: ColorManager.focusColor,fontSize: FontSize.fontSize16),))),
       ),
     );
   }
@@ -235,7 +235,7 @@ class ShowMessageImpl implements ShowMessage  {
 
                 retryActionFunction.call();
 
-            }, child: Text(AppLocalizationsImpl.of(context)!.translate(AppStrings.ok),style: getRegularStyle(color: ColorManager.focusColor,fontSize: FontSize.fontSize16),))),
+            }, child: Text(AppLocalizationsImpl.of(context)!.translate(AppStrings.ok),textAlign: TextAlign.center,style: getRegularStyle(color: ColorManager.focusColor,fontSize: FontSize.fontSize16),))),
       ),
     );
   }
@@ -248,7 +248,7 @@ class ShowMessageImpl implements ShowMessage  {
 
                 retryActionFunction.call();
 
-            }, child: Text(AppLocalizationsImpl.of(context)!.translate(AppStrings.ok),style: getRegularStyle(color: ColorManager.focusColor,fontSize: FontSize.fontSize16),))),
+            }, child: Text(AppLocalizationsImpl.of(context)!.translate(AppStrings.ok),textAlign: TextAlign.center,style: getRegularStyle(color: ColorManager.focusColor,fontSize: FontSize.fontSize16),))),
       ),
     );
   }
@@ -289,10 +289,10 @@ class FullScreenModal extends ModalRoute {
   bool get maintainState => true;
 
   static const colorizeColors = [
-    Colors.purple,
+    Colors.lightBlue,
     Colors.blue,
-    Colors.yellow,
-    Colors.red,
+    Colors.green,
+    Colors.lightBlueAccent,
   ];
 
   static const colorizeTextStyle = TextStyle(
@@ -314,23 +314,11 @@ class FullScreenModal extends ModalRoute {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const CircularLoading(),
-              AnimatedTextKit(
-                repeatForever: true,
-                animatedTexts: [
-
-                  ColorizeAnimatedText(
-                    'أكسفورد',
-                    textStyle: colorizeTextStyle,
-                    colors: colorizeColors,
-                  ),
-
-                ],
-                isRepeatingAnimation: true,
-                onTap: () {
-
-                },
+              Center(
+               child:  Lottie.asset(JsonAssetManager.lottieLoading),
               ),
+
+
             ],
           )
         ),

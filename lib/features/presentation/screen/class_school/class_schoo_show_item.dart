@@ -1,19 +1,18 @@
 
 import 'dart:developer';
 
- import 'package:hesham/core/extension/extension.dart';
+ import 'package:flick_video_player/flick_video_player.dart';
+import 'package:hesham/core/extension/extension.dart';
 import 'package:hesham/core/resources/assets_manager.dart';
 import 'package:hesham/core/resources/values_manager.dart';
 import 'package:hesham/features/domain/entities/courses.dart';
 import 'package:hesham/features/presentation/common/widget/full_error_screen.dart';
 import 'package:hesham/features/presentation/common/widget/loading_widget.dart';
 import 'package:hesham/features/presentation/routes/app_routes.dart';
-import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:video_player/video_player.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../../../core/di/dependency_injection.dart';

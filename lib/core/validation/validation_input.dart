@@ -127,7 +127,7 @@ mixin ValidationImpl implements Validation {
   @override
   DataSourceValidationInput? validateUserName(String? username) {
 
-    if (username == null || username.length<4) {
+    if (username == null || username.length<4||username.length>25) {
       return DataSourceValidationInput.length;
     }
     return null;

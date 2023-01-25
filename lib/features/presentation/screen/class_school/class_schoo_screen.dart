@@ -104,7 +104,7 @@ class Items extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: ColorManager.whiteColor,
+
       height: context.height-AppSize.appSize60,
       width: context.width,
       padding:const EdgeInsets.all(AppPadding.appPadding8),
@@ -125,11 +125,11 @@ class Items extends StatelessWidget {
                     height: AppSize.appSize70,
                     child: ListTile(
                       onTap:  ()=>showBottomSheet(context,courses.lessons[index],instance<HomeBloc>()),
-                      title: Text( AppLocalizationsImpl.of(context)!.translate(courses.lessons[index].title), style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: ColorManager.secondColor,fontSize: FontSize.fontSize14),)
+                      title: Text( AppLocalizationsImpl.of(context)!.translate(courses.lessons[index].title), style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: ColorManager.blackColor,fontSize: FontSize.fontSize14),)
                       ,leading: CircleAvatar(
-                        backgroundColor: ColorManager.primaryColor,
+                        backgroundColor: ColorManager.primaryColorgreen,
                         child: Text(courses.lessons[index].id.toString(),style: Theme.of(context).textTheme.bodySmall!.copyWith(color: ColorManager.whiteColor),),),
-                        trailing: Icon(Icons.arrow_forward_ios,color:ColorManager.primaryColor,size: AppSize.appSize26),
+                        trailing: Icon(Icons.arrow_forward_ios,color:ColorManager.primaryColorgreen,size: AppSize.appSize26),
                     ),
 
                   ),
@@ -229,7 +229,10 @@ class _UploadButton extends StatelessWidget {
             replacement:SizedBox(
               width: context.width * AppSize.appSize0_40,
               child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor:ColorManager.primaryColorgreen,
 
+              ),
                 onPressed: ()=>context.read<HomeBloc>().add(SheetLessonEvent(lesson,state.file!)),
                 child: Text(AppLocalizationsImpl.of(context)!.translate(AppStrings.save)),
               ),
@@ -237,6 +240,10 @@ class _UploadButton extends StatelessWidget {
             child: SizedBox(
               width: context.width * AppSize.appSize0_80,
                 child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:ColorManager.primaryColorgreen,
+
+                  ),
                   onPressed: ()=>context.read<HomeBloc>().add(const PickFile()),
                   child: Text(AppLocalizationsImpl.of(context)!.translate(AppStrings.uploadFile)),
                 ),
@@ -259,7 +266,19 @@ class HomeWorkAnswer extends StatelessWidget {
       {
         if(state.statePage==StatePage.data)
         {
-          instance<ShowMessage>().dismissDialogValue(context);
+          if(state.isUploaded==true)
+          {
+
+            instance<ShowMessage>().showSnakeBar(context,AppStrings.success);
+
+            Navigator.pushReplacementNamed(context, Routes.homeRoot);
+
+          }
+          else
+          {
+            instance<ShowMessage>().dismissDialogValue(context);
+
+          }
         }
         if(state.statePage==StatePage.error)
         {
@@ -289,7 +308,7 @@ class HomeWorkAnswer extends StatelessWidget {
         height: AppSize.appSize80,
         width: context.width*AppSize.appSize0_30,
         child: Card(
-          color: ColorManager.primaryColor,
+          color: ColorManager.primaryColorgreen,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -320,7 +339,7 @@ class MaterialClass extends StatelessWidget {
         height: AppSize.appSize80,
         width: context.width*AppSize.appSize0_30,
         child: Card(
-          color: ColorManager.primaryColor,
+          color: ColorManager.primaryColorgreen,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -346,7 +365,7 @@ class VideoMaterialClass extends StatelessWidget {
         height: AppSize.appSize80,
         width: context.width*AppSize.appSize0_30,
         child: Card(
-          color: ColorManager.primaryColor,
+          color: ColorManager.primaryColorgreen,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -371,7 +390,7 @@ class HomeWorkQuestion extends StatelessWidget {
         height: AppSize.appSize80,
         width: context.width*AppSize.appSize0_30,
         child: Card(
-          color: ColorManager.primaryColor,
+          color: ColorManager.primaryColorgreen,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,

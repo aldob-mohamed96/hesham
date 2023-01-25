@@ -2,16 +2,20 @@
 class Assets {
   Assets._();
 
-  static const String imagesImages = 'assets/images/images.rar';
-  static const String imagesMock2 = 'assets/images/mock2.jpg';
-  static const String imagesMock3 = 'assets/images/mock3.jpg';
-  static const String imagesMock4 = 'assets/images/mock4.jpg';
+  static const String fontsMontserrat = 'assets/fonts/Montserrat.ttf';
+  static const String imagesBack = 'assets/images/back.png';
+  static const String imagesBrand = 'assets/images/brand.png';
+  static const String imagesLogo = 'assets/images/logo.png';
   static const String imagesSplash = 'assets/images/splash.png';
+  static const String imagesVideo = 'assets/images/video.gif';
   static const String jsonEmpty = 'assets/json/empty.json';
+  static const String jsonEmptyHome = 'assets/json/emptyHome.json';
   static const String jsonError4 = 'assets/json/error4.json';
   static const String jsonError5 = 'assets/json/error5.json';
+  static const String jsonLoad = 'assets/json/load.json';
   static const String jsonLoadHome = 'assets/json/loadHome.json';
   static const String jsonMaintain = 'assets/json/maintain.json';
+  static const String jsonSplash = 'assets/json/splash.json';
   static const String jsonSuccess = 'assets/json/success.json';
   static const String translationsAr = 'assets/translations/ar.json';
   static const String translationsEn = 'assets/translations/en.json';

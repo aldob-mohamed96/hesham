@@ -68,3 +68,27 @@ class MessageDataPagaination extends Equatable{
 
 
 }
+
+
+
+class MessagesItem extends Equatable{
+  final int id;
+  final String message;
+  final String createdAt;
+  final bool isSender;
+
+  @override
+  List<Object?> get props => [
+    id,
+    message,isSender,createdAt
+  ];
+  const MessagesItem.empty():this(
+    AppConstants.defaultEmptyInteger,
+    AppConstants.defaultEmptyString,
+    AppConstants.defaultEmptyString,
+    AppConstants.defaultEmptyBool,
+
+
+  );
+  const MessagesItem(this.id, this.message,this.createdAt,this.isSender);
+}

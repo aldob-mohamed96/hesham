@@ -101,9 +101,7 @@ class _PhoneInput extends StatelessWidget {
       builder: (context, state) {
         return TextField(
           keyboardType: TextInputType.text,
-          onChanged: (username) => context
-              .read<LoginBloc>()
-              .add(UsernameChanged(username: username)),
+          onChanged: (username) => context.read<LoginBloc>().add(UsernameChanged(username: username.toString().trimLeft().trimRight())),
           decoration: InputDecoration(
             prefixIcon: const Padding(
               padding: EdgeInsets.all(AppPadding.appPadding16),
@@ -111,7 +109,7 @@ class _PhoneInput extends StatelessWidget {
             ),
             hintText: AppLocalizationsImpl.of(context)!
                 .translate(AppStrings.username),
-            errorText: state.password.invalid
+            errorText: state.username.invalid
                 ? AppLocalizationsImpl.of(context)!
                     .translate(state.username.error.getErrorInput().toString())
                 : null,
@@ -134,7 +132,7 @@ class _PasswordInput extends StatelessWidget {
           keyboardType: TextInputType.text,
 
           onChanged: (password) => context
-              .read<LoginBloc>().add(PasswordChanged(password: password)),
+              .read<LoginBloc>().add(PasswordChanged(password: password.toString().trimLeft().trimRight())),
           decoration: InputDecoration(
             prefixIcon: const Padding(
               padding: EdgeInsets.all(AppPadding.appPadding16),
@@ -169,23 +167,23 @@ class _LoginButton extends StatelessWidget {
         buildWhen: (previous, current) => previous.status != current.status,
         builder: (context, state) {
           return SizedBox(
-            width: context.width * AppSize.appSize0_80,
-            // height: AppSize.appSize40,
-            child: Hero(
-              tag: "button_login",
-              child: ElevatedButton(
-                style: ButtonStyle(backgroundColor: MaterialStateProperty.all(ColorManager.whiteColor)),
-                key: const Key(AppConstants.keyLoginButtonFiled),
-                onPressed: state.username.valid&&state.password.valid
-                    ? () =>
+            width: context.width * AppSize.appSize0_85,
+             height: AppSize.appSize50,
+             child: RawMaterialButton(
+shape:
+    RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0), side:const BorderSide(color: Colors.transparent)),
+                padding:const EdgeInsets.all(10.0),
+                disabledElevation: 1,
+                fillColor:  state.status.isValidated ? ColorManager.whiteColor :  Colors.grey,
+                onPressed: state.status.isValidated?()=> context.read<LoginBloc>().add(LoginSubmitted()):null,
+                child:!state.status.isValidated?
+                    Icon(Icons.lock,color: ColorManager.primaryColor,)
+                    :
+                Text(AppLocalizationsImpl.of(context)!
+                    .translate(AppStrings.login),style: TextStyle(color:  state.status.isValidated ?ColorManager.primaryColor:Colors.grey,fontFamily: 'Montserrat',)),
 
-              context.read<LoginBloc>().add(LoginSubmitted())
-
-                    : null,
-                child: Text(AppLocalizationsImpl.of(context)!
-                    .translate(AppStrings.login),style: TextStyle(color: ColorManager.primaryColor)),
-              ),
-            ),
+              )
           );
         });
   }

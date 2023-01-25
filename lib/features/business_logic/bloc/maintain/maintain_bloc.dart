@@ -40,13 +40,14 @@ class MaintainBloc extends Bloc<MaintainEvent, MaintainState> {
 
 
   void _onSendMaintain(SendMaintain event,Emitter<MaintainState> emit)async{
-    emit(state.copyWith(isLoading: true));
+    emit(state.copyWith(isLoading: true,isFailure: false));
     final result=await _addContactUseCase.execute(AddContactRequest(event.message));
     result.fold(
             (failure) =>  emit(state.copyWith(isLoading: false,failure: failure,isFailure: true)),
             (driverOrderDataResponse)
         {
-          return emit(state.copyWith(isLoading: false,sendSuccess: true));
+          final list=List.of(state.messages)..add(MessagesItem(state.messages.length, event.message, DateTime.now().toString(), false));
+          return emit(state.copyWith(isLoading: false,sendSuccess: true,messages: list));
 
         });
 
@@ -56,14 +57,16 @@ class MaintainBloc extends Bloc<MaintainEvent, MaintainState> {
 
     if(state.isFirst==true)
     {
-      emit(state.copyWith(isLoading: true));
+      emit(state.copyWith(isLoading: true,isFailure: false));
       final result=await _contactUseCase.execute(lessonRequest);
 
       result.fold(
               (failure) =>  emit(state.copyWith(isLoading: false,failure: failure,isFailure: true)),
               (driverOrderDataResponse)
           {
-            return emit(state.copyWith(isLoading: false,messageData: driverOrderDataResponse.data,hasReachedMax:driverOrderDataResponse.data.total==driverOrderDataResponse.data.to ,isFirst: false));
+            List<MessagesItem> items=messages( driverOrderDataResponse.data.messageData);
+
+            return emit(state.copyWith(isLoading: false,isFailure: false,messages: items,messageData: driverOrderDataResponse.data,hasReachedMax:driverOrderDataResponse.data.total==driverOrderDataResponse.data.to ,isFirst: false));
 
           });
     }
@@ -83,7 +86,11 @@ class MaintainBloc extends Bloc<MaintainEvent, MaintainState> {
             {
 
               var maintains=List.of(state.messageData.messageData)..addAll(driverOrderDataResponse.data.messageData);
-              emit(state.copyWith(isLoading: false,messageData: MessageData(
+              List<MessagesItem> items=messages(maintains);
+              emit(state.copyWith(
+                messages: items,
+                isFailure: false,
+                isLoading: false,messageData: MessageData(
                 maintains,
                 driverOrderDataResponse.data.currentPage,
                 driverOrderDataResponse.data.from,
@@ -102,7 +109,7 @@ class MaintainBloc extends Bloc<MaintainEvent, MaintainState> {
   }
   void _onRefreshMaintain(RefreshMaintain event,Emitter<MaintainState> emit)async{
     {
-      emit(state.copyWith(isLoading: true));
+      emit(state.copyWith(isLoading: true,isFailure: false));
 
       lessonRequest.id=1;
       final result=await _contactUseCase.execute(lessonRequest);
@@ -111,8 +118,11 @@ class MaintainBloc extends Bloc<MaintainEvent, MaintainState> {
               (driverOrderDataResponse)
           {
             var maintains=List.of(state.messageData.messageData)..clear()..addAll(driverOrderDataResponse.data.messageData);
-
-            return emit(state.copyWith(isLoading: false,
+            List<MessagesItem> items=messages(maintains);
+            return emit(state.copyWith(
+                messages: items,
+                isLoading: false,
+                isFailure: false,
                 messageData: MessageData(maintains, driverOrderDataResponse.data.currentPage,
                     driverOrderDataResponse.data.from,
                     driverOrderDataResponse.data.lastPage,
@@ -123,4 +133,22 @@ class MaintainBloc extends Bloc<MaintainEvent, MaintainState> {
 
     }
   }
+}
+
+List<MessagesItem> messages(List<MessagesChat> data)
+{
+  List<MessagesItem> items=<MessagesItem>[];
+
+  for(int i=0;i<data.length;i++)
+    {
+      items.add(MessagesItem(data[i].id, data[i].message,data[i].createdAt, false,));
+
+      for(int o=0;o<data[i].replies.length;o++)
+        {
+          items.add(MessagesItem(data[i].replies[o].id, data[i].replies[o].content,data[i].replies[o].createdAt, true,));
+         }
+    }
+
+
+  return items;
 }

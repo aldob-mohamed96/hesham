@@ -1,12 +1,12 @@
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:hesham/core/enum/enums.dart';
 import 'package:hesham/core/extension/extension.dart';
 import 'package:hesham/core/resources/app_constant.dart';
 import 'package:hesham/features/domain/entities/courses.dart';
 import 'package:hesham/features/presentation/common/widget/dialog_snackbar.dart';
 import 'package:hesham/features/presentation/common/widget/main_scaffold_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -18,11 +18,16 @@ import '../../../../core/resources/assets_manager.dart';
 import '../../../../core/resources/color_manager.dart';
 import '../../../../core/resources/font_manager.dart';
 import '../../../../core/resources/strings_manager.dart';
+import '../../../../core/resources/style_manager.dart';
 import '../../../../core/resources/values_manager.dart';
 import '../../../business_logic/bloc/home/home_bloc.dart';
 import '../../../business_logic/cubit/langauge/langauge_cubit.dart';
 import '../../../business_logic/cubit/langauge/localization/app_localizations.dart';
+import '../../common/widget/full_empty_screen.dart';
 import '../../routes/app_routes.dart';
+import 'package:flutter/material.dart';
+
+import 'drawer.dart';
 
 
 class HomeScreen extends StatelessWidget {
@@ -51,12 +56,40 @@ class Content extends StatelessWidget {
               {
                 if(state.statePage==StatePage.data)
                   {
-                    instance<ShowMessage>().dismissDialogValue(context);
+                    if(state.isUploaded==true)
+                      {
+
+                        Navigator.pushReplacementNamed(context, Routes.homeRoot);
+                        instance<ShowMessage>().showSnakeBar(context,AppStrings.acceptedSuccess);
+
+                      }
+                    else
+                      {
+                        instance<ShowMessage>().dismissDialogValue(context);
+
+                      }
                   }
 
                 if(state.statePage==StatePage.error)
                 {
-                  instance<ShowMessage>().showErrorPopUpOk(context, state.failure.message);
+
+
+                    if (state.failure == AppConstants.maintainFailure) {
+                      Navigator.pushReplacementNamed(context, Routes.maintainAppRoot);
+                    }
+                    else if (state.failure == AppConstants.updateFailure) {
+
+                      Navigator.pushReplacementNamed(context, Routes.maintainAppRoot);
+                    }
+                    else if (state.failure == AppConstants.unAuthenticatedFailure) {
+                      Navigator.pushReplacementNamed(context, Routes.loginRoot);
+                    }
+                    else
+                    {
+                      instance<ShowMessage>().showErrorPopUpOk(context, state.failure.message);
+                    }
+
+
                 }
 
                 if(state.statePage==StatePage.loading)
@@ -70,124 +103,75 @@ class Content extends StatelessWidget {
 
 
               },
-  child:const Widgets(),), onRefresh: ()async{});
+  child: Widgets(),), onRefresh: ()async{});
   }
 }
 class Widgets extends StatelessWidget {
-  const Widgets({Key? key}) : super(key: key);
+  final GlobalKey<ScaffoldState> _scaffoldKey =  GlobalKey<ScaffoldState>();
+
+   Widgets({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return  Column(
-       crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
+    return  BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        return SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: context.height*AppSize.appSize0_30,
+                child: Column(children: [
 
-            decoration: BoxDecoration(
-              borderRadius:const BorderRadius.only(
-                  bottomRight: Radius.circular(10), bottomLeft: Radius.circular(10)),
-
-              color: ColorManager.primaryColor,
-              image:const DecorationImage(image: AssetImage(ImagesAssetsManage.brandImages,)),
-            ),
-            height: AppSize.appSize40,width:context.width,
-          ),
-
-           SizedBox(height:context.height* AppSize.appSize0_01,),
-          _slider(context),
+                  Container( padding:const EdgeInsets.symmetric(horizontal: 15),height:50,child: Image.asset(ImagesAssetsManage.brandImages),),
+                  const Slider(),
 
 
-          SizedBox(height:context.height* AppSize.appSize0_01),
-          _hintText(context),
-          _ListView(context),
-          Divider(height:context.height* AppSize.appSize0_01,endIndent: 20,indent: 20,thickness: 4,color: ColorManager.primaryColorLight,),
-          Expanded(child: _gridview(context)),
-          ],
-    );
-  }
-
-  
-
-
-  
-   _hintText(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SizedBox(
-          height: context.height*AppSize.appSize0_5,
-          child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AppPadding.appPadding20),
-                child: Text(AppLocalizationsImpl.of(context)!.translate(AppStrings.classSchool),
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(color:
-                  ColorManager.whiteColor,fontWeight: FontWeight.bold,fontSize: FontSize.fontSize18,),),
-              ),
-        ),
-      ],
-    );
-  }
-  _welcomeMessage(BuildContext context) {
-    return SizedBox(
-      height: context.height*AppSize.appSize0_10,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppPadding.appPadding20),
-        child: Text(AppLocalizationsImpl.of(context)!.translate(AppStrings.welcomeMessage),style: Theme.of(context).textTheme.bodySmall!.copyWith(color: ColorManager.primaryColor,fontWeight: FontWeight.bold,fontSize: FontSize.fontSize20),),
-      ),
-    );
-  }
-
-  _slider(BuildContext context){
-
-    return SizedBox(
-      height: context.height*AppSize.appSize0_25,
-      width: context.width,
-
-      child: BlocBuilder<HomeBloc, HomeState>(
-        builder: (context, state) {
-          return CarouselSlider(
-            options: CarouselOptions(
-
-              enableInfiniteScroll: true,
-              reverse: true,
-              autoPlay: true,
-              autoPlayInterval:const Duration(seconds: AppValue.appValue3),
-              autoPlayAnimationDuration:const Duration(milliseconds: AppValue.appValue800),
-              autoPlayCurve: Curves.fastOutSlowIn,
-              enlargeCenterPage: true,
-              scrollDirection: Axis.horizontal,
-            ),
-            items: state.images.map((i) {
-              return CachedNetworkImage(
-                color: Colors.white,
+                ],),),
+              Container(
+                height: context.height*AppSize.appSize0_60,
                 width: context.width,
-                height:AppSize.appSize150 ,
-                //todo
-                imageUrl: i.toString() ,
-                imageBuilder: (context, imageProvider) => Container(
+                padding: EdgeInsets.zero,
+                margin: EdgeInsets.zero,
+                decoration:const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(40.0),
+                    //   bottomRight: Radius.circular(40.0),
+                    topLeft: Radius.circular(40.0),
+                    //   bottomLeft: Radius.circular(40.0)),
+                  ),),
 
-                  decoration: BoxDecoration(
-
-                    borderRadius: BorderRadius.circular(AppSize.appSize20),
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: imageProvider,
-                      colorFilter: const ColorFilter.mode(
-                        Colors.white,
-                        BlendMode.colorBurn,
-                      ),
+                child: Column(children: [
+                  if(state.homeData.data.subjects.isEmpty)
+                    Column(
+                      children: [
+                        SizedBox(
+                          child: Lottie.asset(JsonAssetManager.lottieEmptyHome),),
+                        Text(AppLocalizationsImpl.of(context)!.translate(AppStrings.emptyContent),textAlign: TextAlign.center,style:
+                        getRegularStyle(color: ColorManager.primaryColor,fontSize: FontSize.fontSize16,),)
+                      ],
                     ),
-                  ),
-                ),
-                placeholder: (context, url) =>const Center(child:  CircularProgressIndicator()),
-                errorWidget: (context, url, error) => Card(child: Image.asset(ImagesAssetsManage.splashImages)),
-              )
-                ;
-            }).toList(),
-          );
-        },
-      ),
+                  if(state.homeData.data.subjects.isNotEmpty)
+                    _ListView(context),
+                  if(state.homeData.data.subjects.isNotEmpty)
+                    Divider(height:context.height* AppSize.appSize0_01,endIndent: 20,indent: 20,thickness: 4,color: ColorManager.primaryColorLight,),
+                  if(state.homeData.data.subjects.isNotEmpty)
+                    Expanded(child: _gridview(context)),
+                ],),)
+
+            ],
+          ),
+        );
+      },
     );
   }
+
+  
+
+
+
   _ListView(BuildContext context) {
     return SizedBox(
       height: context.height*AppSize.appSize0_10,
@@ -247,7 +231,7 @@ class Widgets extends StatelessWidget {
           height: 50,
           width: context.width/2,right: 0,child:     Container(
           decoration: BoxDecoration(
-            color: ColorManager.primaryColor,
+            color: ColorManager.primaryColorgreen,
             border: Border.all(
               color: ColorManager.primaryColor,
               style: BorderStyle.solid,
@@ -299,7 +283,7 @@ class Widgets extends StatelessWidget {
         margin:const EdgeInsets.all(AppPadding.appPadding4),
 
         decoration: BoxDecoration(
-          color: isSelected? ColorManager.primaryColor:ColorManager.primaryColorLight,
+          color: isSelected? ColorManager.primaryColorgreen:ColorManager.primaryColorLight,
           borderRadius:const BorderRadius.all(Radius.circular(AppSize.appSize10)),
 
         ),
@@ -320,3 +304,59 @@ class Widgets extends StatelessWidget {
 
 
 
+class Slider extends StatelessWidget {
+  const Slider({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: context.height*AppSize.appSize0_20,
+      width: context.width,
+
+      child: BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          return CarouselSlider(
+            options: CarouselOptions(
+
+              enableInfiniteScroll: true,
+              reverse: true,
+              autoPlay: true,
+              autoPlayInterval:const Duration(seconds: AppValue.appValue3),
+              autoPlayAnimationDuration:const Duration(milliseconds: AppValue.appValue800),
+              autoPlayCurve: Curves.fastOutSlowIn,
+              enlargeCenterPage: true,
+              scrollDirection: Axis.horizontal,
+            ),
+            items: state.images.map((i) {
+              return CachedNetworkImage(
+                color: Colors.white,
+                width: context.width,
+                height:AppSize.appSize150 ,
+                //todo
+                imageUrl: i.toString() ,
+                imageBuilder: (context, imageProvider) => Container(
+
+                  decoration: BoxDecoration(
+
+                    borderRadius: BorderRadius.circular(AppSize.appSize20),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: imageProvider,
+                      colorFilter: const ColorFilter.mode(
+                        Colors.white,
+                        BlendMode.colorBurn,
+                      ),
+                    ),
+                  ),
+                ),
+                placeholder: (context, url) =>const Center(child:  CircularProgressIndicator()),
+                errorWidget: (context, url, error) => Card(child: Image.asset(ImagesAssetsManage.splashImages)),
+              )
+              ;
+            }).toList(),
+          );
+        },
+      ),
+    );
+  }
+}

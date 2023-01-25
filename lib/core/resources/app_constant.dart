@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:hesham/core/resources/app_api_codes.dart';
 import 'package:hesham/core/resources/strings_manager.dart';
 
 import '../../features/business_logic/cubit/langauge/localization/app_localizations.dart';
@@ -17,6 +18,18 @@ class AppConstants {
 
 //loading const String
   static const String loading = "loading";
+
+  //timer tricker
+  static const Duration timerDurationTick = Duration(seconds: 1);
+  static const int timerDuration = 300;
+  static const Failure inCorrectCode = Failure(-223, AppStrings.inValidCode);
+  static const Failure accountPendingFailure = Failure(ResponseCode.pendingAccount, AppStrings.accountPending);
+  static const Failure unknownFailure = Failure(0000, AppStrings.unknownError);
+
+  static const Failure maintainFailure = Failure(ResponseCode.maintainApp, AppStrings.maintainApp);
+  static const Failure unAuthenticatedFailure = Failure(ResponseCode.unAuthenticated, AppStrings.unAuthorised);
+  static const Failure updateFailure = Failure(ResponseCode.updateApp, AppStrings.updateApp);
+//default core Setting theme ...language
 
 //validation
   static const String usernameValidationLength = '';
@@ -90,13 +103,7 @@ class AppConstants {
   static const double valueDoubleNotFount = -1.0;
 
 //timer tricker
-  static const Duration timerDurationTick = Duration(seconds: 1);
-  static const int timerDuration = 40;
-  static const Failure inCorrectCode = Failure(-223, AppStrings.inValidCode);
-  static const Failure accountPendingFailure = Failure(-1223, AppStrings.authAccountBlocked);
-  static const Failure unknownFailure = Failure(0000, AppStrings.unknownError);
   static const Failure unknownUplodedBefore = Failure(0000, AppStrings.uploadedBefore);
-  static const Failure maintainFailure = Failure(0110, AppStrings.unknownError);
 //default core Setting theme ...language
 
   static const String defaultThemeModeApp = 'light';
@@ -105,15 +112,16 @@ class AppConstants {
   static const String systemTheme = "system";
   static const ThemeMode defaultTheme = ThemeMode.light;
 
-  static const String defaultLanguageAppCode = "en";
+  static const String defaultLanguageAppCode = "ar";
   static const String arabicLanguageCode = "ar";
   static const String englishLanguageCode = "en";
   static const Locale englishLocal = Locale("en", '');
-  static const Locale defaultLocal = Locale("en", '');
+  static const Locale defaultLocal = Locale("ar", '');
   static const Locale arabicLocal = Locale("ar", '');
   static const Iterable<Locale> supportedLocales = [
+    AppConstants.arabicLocal,
     AppConstants.englishLocal,
-    AppConstants.arabicLocal
+
   ];
   static const List<String> supportedLangauge = [
     AppConstants.arabicLanguageCode,
@@ -337,10 +345,35 @@ class NetworkConstant {
 }
 
 class ErrorCode{
-  static const String unknownError = "0000";
-  static const String authAccountDeleted = "0001";
-  static const String authAccountBlocked = "0002";
-  static const String authVerificationCodeNotSend = "0003";
-  static const String authDataInValidData = "0004";
-  static const String authThisDataExists = "0005";
+  static const String unknownError = "000000";
+  static const String tokenNotExist = "100000";
+
+  static const String authAccountDeleted = "100001";
+  static const String authAccountBlocked = "100002";
+  static const String authVerificationCodeNotSend = "100003";
+  static const String authDataInValidData = "100004";
+
+  static const String addMaintainErrorOccurred = "100005";
+
+  static const String authCreationAccountAlreadyExist = "100006";
+  static const String authErrorOccurredInRegister = "100007";
+  static const String authAccountNotExist = "100008";
+
+  static const String passwordNotUpdated = "100009";
+
+  static const String tripNotExists = "100010";
+  static const String NoBalanceEnough = "100011";
+
+  static const String dataTransferInvalid = "100012";
+  static const String dataTransferInvalid13 = "100013";
+  static const String dataTransferInvalid14 = "100014";
+  static const String dataTransferInvalid15 = "100015";
+  static const String dataTransferInvalid16 = "100016";
+  static const String dataTransferInvalid17 = "100017";
+
+
+  static const String maintainApp = "999999";
+  static const String updatedApp = "888888";
+  static const String unAuthenticatedApp = "777777";
+  static const String pendingAccount = "666666";
 }

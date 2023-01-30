@@ -45,6 +45,12 @@ class LogoutEvent extends HomeEvent{
   @override
   List<Object?> get props => [];
 
+}class RecordingEvent extends HomeEvent{
+  final bool isRecord;
+  const RecordingEvent(this.isRecord);
+  @override
+  List<Object?> get props => [isRecord];
+
 }
 class SheetLessonEvent extends HomeEvent{
   final File file;

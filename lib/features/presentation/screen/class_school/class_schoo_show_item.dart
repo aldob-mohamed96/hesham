@@ -22,7 +22,7 @@ import '../../../business_logic/bloc/home/home_bloc.dart';
 import '../../../business_logic/cubit/langauge/localization/app_localizations.dart';
 import '../../common/widget/main_scaffold_auth.dart';
 import '../home/home_screen.dart';
-
+import 'package:screen_capture_event/screen_capture_event.dart';
 class ClassScreenShow extends StatelessWidget {
   const ClassScreenShow({Key? key}) : super(key: key);
 
@@ -94,6 +94,7 @@ class _VideoShowState extends State<VideoShow> {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
+
     _controller.dispose();
 
     super.dispose();
@@ -102,8 +103,9 @@ class _VideoShowState extends State<VideoShow> {
     @override
   Widget build(BuildContext context) {
     return  BlocBuilder<HomeBloc, HomeState>(
+      buildWhen: (previous, current) => previous.isRecording!=current.isRecording,
   builder: (context, state) {
-    return SizedBox(
+    return state.isRecording? Container(color: Colors.white,):SizedBox(
       height: 400,
       child:isValid?
       YoutubePlayer(

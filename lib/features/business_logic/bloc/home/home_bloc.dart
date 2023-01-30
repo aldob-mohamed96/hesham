@@ -19,6 +19,7 @@ import '../../../../core/enum/enums.dart';
 import '../../../../core/resources/values_manager.dart';
 import '../../../../core/services/permission.dart';
 import '../../../domain/usecases/app_usecase.dart';
+import 'package:screen_capture_event/screen_capture_event.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
@@ -35,14 +36,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final AttendanceUseCase attendanceUseCase;
   final LogoutUseCase logoutUseCase;
   final PermissionHandling permissionHandling;
-
+  final ScreenCaptureEvent screenListener = ScreenCaptureEvent();
  HomeBloc({required this.logoutUseCase,required this.homeUseCase,required this.attendanceUseCase,required this.sheetUseCase,required this.permissionHandling}) : super(const HomeState()) {
     on<GetHomeData>(_onGetHomeData);
     on<SelectedSubject>(_onSelectedSubject);
     on<SheetLessonEvent>(_onSheetLessonEvent);
+    on<RecordingEvent>(_onRecordingEvent);
     on<AttendanceLessonEvent>(_onAttendanceLessonEvent);
     on<LogoutEvent>(_onLogoutEvent);
     on<PickFile>(_onPickFile);
+    screenListener.addScreenRecordListener((recorded)=>add(RecordingEvent(recorded)));
+    screenListener.watch();
 
 
   }
@@ -54,6 +58,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     await logoutUseCase.execute(unit);
     emit(state.copyWith(logout: true));
 
+  }
+  void _onRecordingEvent(RecordingEvent event,Emitter<HomeState> emit)async
+  {
+    emit(state.copyWith(isRecording: event.isRecord));
   }
   void _onAttendanceLessonEvent(AttendanceLessonEvent event,Emitter<HomeState> emit)async
   {
@@ -124,11 +132,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
    {
 
 
-         Subject subject=homeData.data.subjects.isNotEmpty?homeData.data.subjects.firstWhere((element) => element.id==state.selected):const Subject.empty();
-         emit(state.copyWith(homeData: homeData, statePage: StatePage.data,subject: subject,images: homeData.data.images));
+         Subject subject=homeData.data.subjects.isNotEmpty?homeData.data.subjects.first:const Subject.empty();
+         emit(state.copyWith(homeData: homeData, statePage: StatePage.data,subject: subject,images: homeData.data.images,selected: subject.id));
 
    });
 
 
  }
+ @override
+  Future<void> close() {
+    screenListener.dispose();
+    return super.close();
+  }
 }

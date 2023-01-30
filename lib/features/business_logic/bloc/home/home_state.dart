@@ -15,6 +15,7 @@ class HomeState extends Equatable{
   final MessageData chatMessages;
   final bool isFirst;
   final bool hasReachedMax;
+  final bool isRecording;
  const HomeState({
    this.chatMessages=const MessageData.empty(),
    this.images=const <String>[],
@@ -24,6 +25,7 @@ class HomeState extends Equatable{
    this.isFirst=false,
    this.hasReachedMax=false,
    this.isUploaded=false,
+   this.isRecording=false,
    this.subject=const Subject.empty(),
    this.lessonData=const LessonData.empty(),
    this.homeData=const HomeData.empty(),this.statePage=StatePage.initial,this.failure=const Failure.unknown()});
@@ -37,6 +39,7 @@ class HomeState extends Equatable{
    bool? isUploaded,
    bool? hasReachedMax,
    bool? isFirst,
+   bool? isRecording,
    int? selected,
    Subject? subject,
    HomeData? homeData,
@@ -48,6 +51,7 @@ class HomeState extends Equatable{
      images: images??this.images,
      logout: logout??this.logout,
      isFirst: isFirst??this.isFirst,
+     isRecording: isRecording??this.isRecording,
      hasReachedMax: hasReachedMax??this.hasReachedMax,
      subject: subject??this.subject,
      selected: selected??this.selected,
@@ -58,6 +62,6 @@ class HomeState extends Equatable{
      failure:failure??this.failure);
 
   @override
-  List<Object?> get props => [homeData,chatMessages,images,file,logout,isUploaded,subject,statePage,selected,lessonData,failure];
+  List<Object?> get props => [homeData,isRecording,chatMessages,images,file,logout,isUploaded,subject,statePage,selected,lessonData,failure];
 
 }

@@ -952,6 +952,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.7"
+  screen_capture_event:
+    dependency: "direct dev"
+    description:
+      name: screen_capture_event
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.1"
   shared_preferences:
     dependency: "direct main"
     description:

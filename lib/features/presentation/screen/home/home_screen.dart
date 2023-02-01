@@ -220,18 +220,24 @@ class Widgets extends StatelessWidget {
 
       },
       child: Container(
-        margin:const EdgeInsets.all(AppPadding.appPadding4),
+        margin:const EdgeInsets.all(AppPadding.appPadding8),
 
-        height: 50,
+        height: 60,
         width: context.width,
         child: Stack(
 
         children: [
  
         Positioned(
-          height: 50,
-          width: context.width/2,right: 0,child:     Container(
+          height: 60,
+          width: context.width*AppSize.appSize0_55,
+
+
+            right: 0,child:     Container(
+
           padding:const EdgeInsets.all(AppPadding.appPadding4),
+          //padding:const EdgeInsets.symmetric(horizontal:AppPadding.appPadding16,vertical:AppPadding.appPadding4),
+
           decoration: BoxDecoration(
             color: ColorManager.primaryColorgreen,
             border: Border.all(
@@ -242,15 +248,18 @@ class Widgets extends StatelessWidget {
 
             borderRadius: BorderRadius.circular(15),
           ),
-            child: Center(child: Text(courses.description,style: TextStyle(color: ColorManager.whiteColor,),
+            child: Center(child: Text(courses.description,style: TextStyle(color: ColorManager.whiteColor),
             )
             ),
           )),
           Positioned(
-          height: 50,
-          width: context.width/2,left: 0,child:
+          height: 60,
+          width: context.width*AppSize.appSize0_40,left: 0,child:
           Container(
+
+
             padding:const EdgeInsets.all(AppPadding.appPadding4),
+
             decoration: BoxDecoration(
               color: ColorManager.primaryColorLight,
               border: Border.all(
@@ -261,7 +270,7 @@ class Widgets extends StatelessWidget {
 
               borderRadius: BorderRadius.circular(15),
             ),
-            child: Center(child: Text(courses.title,style: TextStyle(color: ColorManager.primaryColor),
+            child: Center(child: Text(courses.title,style: TextStyle(color: ColorManager.primaryColor,),
             )
             ),
           )),
@@ -284,7 +293,7 @@ class Widgets extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         margin:const EdgeInsets.all(AppPadding.appPadding4),
-        padding:const EdgeInsets.all(AppPadding.appPadding4),
+        padding:const EdgeInsets.all(AppPadding.appPadding8),
 
         decoration: BoxDecoration(
           color: isSelected? ColorManager.primaryColorgreen:ColorManager.primaryColorLight,
@@ -292,7 +301,7 @@ class Widgets extends StatelessWidget {
 
         ),
         height: AppSize.appSize40,
-        width: AppSize.appSize120,
+
 
         child: Text(subject.title,
           style: Theme.of(context).textTheme.bodySmall!.copyWith(color:

@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:hesham/core/extension/extension.dart';
 import 'package:hesham/features/presentation/common/widget/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -311,15 +312,20 @@ class FullScreenModal extends ModalRoute {
 
         type: MaterialType.transparency,
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(
-               child:  Lottie.asset(JsonAssetManager.lottieLoading),
-              ),
+          child: SizedBox(
+            width: context.width,
+            height: context.height,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                 child:  Lottie.asset(JsonAssetManager.lottieLoading, width: context.width,
+                   height: context.height, ),
+                ),
 
 
-            ],
+              ],
+            ),
           )
         ),
       ),

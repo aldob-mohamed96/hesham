@@ -85,6 +85,8 @@ class _MainScaffoldState extends State<MainScaffold> {
             )));
   }
 }
+
+
 class HomeScaffold extends StatefulWidget {
   final Widget widget;
 
@@ -129,7 +131,7 @@ class _HomeScaffoldState extends State<HomeScaffold>   {
              decoration:const BoxDecoration(image: DecorationImage(image: AssetImage(ImagesAssetsManage.backImages,),fit: BoxFit.fill),),
 
              child:  SingleChildScrollView(
-               child: Column(children: [
+               child:OrientationBuilder(builder: (context,or)=>or==Orientation.portrait? Column(children: [
                  SizedBox(
                      height: context.height*AppSize.appSize0_15,
                      child: Header(globalKey:_scaffoldKey ,))
@@ -138,7 +140,16 @@ class _HomeScaffoldState extends State<HomeScaffold>   {
                      height: context.height*AppSize.appSize0_85,
                      child: widget.widget)
 
-               ],),
+               ],): Column(children: [
+                 SizedBox(
+                     height: context.width*AppSize.appSize0_15,
+                     child: Header(globalKey:_scaffoldKey ,))
+                 ,
+                 SizedBox(
+                     height: context.width*AppSize.appSize0_85,
+                     child: widget.widget)
+
+               ],),),
              )),
           )
 
@@ -151,19 +162,21 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return   Container(
-      padding:const EdgeInsets.all(15),
-      height: context.height*AppSize.appSize0_15,
-      width: context.width,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Image.asset(ImagesAssetsManage.logoImages,width:AppSize.appSize150,),
-          const NotificationIcon(),
-          GestureDetector(child:const Icon(Icons.menu,color: Colors.white,),onTap: (){
-            globalKey.currentState!.openDrawer();
-          },)
-        ],),
+    return   OrientationBuilder(
+      builder:(context,or)=> Container(
+        padding:or==Orientation.portrait? const EdgeInsets.all(15): const EdgeInsets.only(top:30,bottom:0,left: 15,right: 15),
+        height:or==Orientation.portrait? context.height*AppSize.appSize0_15: context.width*AppSize.appSize0_15,
+        width: context.width,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Image.asset(ImagesAssetsManage.logoImages,width:AppSize.appSize150,),
+            const NotificationIcon(),
+            GestureDetector(child:const Icon(Icons.menu,color: Colors.white,),onTap: (){
+              globalKey.currentState!.openDrawer();
+            },)
+          ],),
+      ),
     );
   }
 }

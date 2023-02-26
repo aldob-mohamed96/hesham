@@ -29,7 +29,9 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,DeviceOrientation.portraitDown,
+    DeviceOrientation.landscapeRight,DeviceOrientation.landscapeLeft]);
   await initAppServicesGetIt();
   Firebase.initializeApp();
   FirebaseMessaging.onMessage.listen((RemoteMessage message) => instance<NotificationCubit>().showNotification(message));
@@ -75,8 +77,7 @@ class AppMaterials extends StatefulWidget {
   State<AppMaterials> createState() => _AppMaterialsState();
 }
 
-class _AppMaterialsState extends State<AppMaterials>
-    with WidgetsBindingObserver {
+class _AppMaterialsState extends State<AppMaterials> with WidgetsBindingObserver {
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);

@@ -61,25 +61,32 @@ class _VideoShowState extends State<VideoShow> {
 
   FlickManager? flickManager;
   late YoutubePlayerController _controller ;
+  late PlayerState _playerState;
+  late YoutubeMetaData _videoMetaData;
+
+  bool _isPlayerReady = false;
   bool isValid=true;
    @override
   void initState() {
 
     super.initState();
     try {
+
+
       _controller = YoutubePlayerController(
-
-        initialVideoId: YoutubePlayer.convertUrlToId(
-           widget.lesson.video)!,
+        initialVideoId: YoutubePlayer.convertUrlToId(widget.lesson.video)!,
         flags: const YoutubePlayerFlags(
-
-          hideThumbnail: false,
-
-          autoPlay: false,
           mute: false,
-
+          autoPlay: true,
+          disableDragSeek: false,
+          loop: false,
+          isLive: false,
+          forceHD: false,
+          enableCaption: true,
         ),
-      );
+      )..addListener(listener);
+      _videoMetaData = const YoutubeMetaData();
+      _playerState = PlayerState.unknown;
       isValid=true;
     }catch(e)
      {
@@ -87,34 +94,72 @@ class _VideoShowState extends State<VideoShow> {
      }
 
   }
+  void listener() {
+    if (_isPlayerReady && mounted && !_controller.value.isFullScreen) {
+      setState(() {
+        _playerState = _controller.value.playerState;
+        _videoMetaData = _controller.metadata;
+      });
+    }
+  }
 
+  @override
+  void deactivate() {
+    _controller.pause();
+    super.deactivate();
+  }
 
   @override
   void dispose() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
-
     _controller.dispose();
-
     super.dispose();
   }
+
 
     @override
   Widget build(BuildContext context) {
     return  BlocBuilder<HomeBloc, HomeState>(
       buildWhen: (previous, current) => previous.isRecording!=current.isRecording,
   builder: (context, state) {
-    return state.isRecording? Container(color: Colors.white,):SizedBox(
-      height: 400,
+    return state.isRecording? Center(child: Container(
+      height: context.height/2,
+      width: context.width,
+      color: Colors.white,)):SizedBox(
+      height: context.width,
       child:isValid?
-      YoutubePlayer(
-        onEnded: (value){
-          context.read<HomeBloc>().add(AttendanceLessonEvent(widget.lesson));
-        },
-        controller: _controller,
-        showVideoProgressIndicator: true,
+      YoutubePlayerBuilder(
 
+        builder: (context, player){return Column(children: [player,],);},
+      //onExitFullScreen: () {SystemChrome.setPreferredOrientations(DeviceOrientation.values);},
+        player: YoutubePlayer(
+            showVideoProgressIndicator: true,
+            progressIndicatorColor: Colors.blueAccent,
+            topActions: <Widget>[
+              const SizedBox(width: 8.0),
+              Expanded(
+                child: Text(
+                  _controller.metadata.title,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+              ),
+
+            ],
+          onEnded: (value){context.read<HomeBloc>().add(AttendanceLessonEvent(widget.lesson));},
+          onReady :()
+          {
+            _isPlayerReady = true;
+           },
+          controller: _controller,
+
+          
+
+
+        ),
       ):
       Scaffold(body: FullErrorScreen(retryActionFunction: ()=>Navigator.of(context,rootNavigator: true).pop(), error: "error")),
     );

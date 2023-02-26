@@ -74,9 +74,12 @@ class _VideoShowState extends State<VideoShow> {
 
 
       _controller = YoutubePlayerController(
+
         initialVideoId: YoutubePlayer.convertUrlToId(widget.lesson.video)!,
+
         flags: const YoutubePlayerFlags(
           mute: false,
+
           autoPlay: true,
           disableDragSeek: false,
           loop: false,
@@ -111,6 +114,8 @@ class _VideoShowState extends State<VideoShow> {
 
   @override
   void dispose() {
+
+
     _controller.dispose();
     super.dispose();
   }
@@ -118,53 +123,74 @@ class _VideoShowState extends State<VideoShow> {
 
     @override
   Widget build(BuildContext context) {
-    return  BlocBuilder<HomeBloc, HomeState>(
-      buildWhen: (previous, current) => previous.isRecording!=current.isRecording,
-  builder: (context, state) {
-    return state.isRecording? Center(child: Container(
-      height: context.height/2,
-      width: context.width,
-      color: Colors.white,)):SizedBox(
-      height: context.width,
-      child:isValid?
-      YoutubePlayerBuilder(
+    return Container(
+        alignment: Alignment.center,
+        width: context.width,
+        height: context.height,
+        decoration:const BoxDecoration(image: DecorationImage(image: AssetImage(ImagesAssetsManage.backImages,),fit: BoxFit.fill),),
+          child: BlocBuilder<HomeBloc, HomeState>(
+            buildWhen: (previous, current) => previous.isRecording!=current.isRecording,
+              builder: (context, state) {
+          return state.isRecording?
+          Container(
+            height: context.height,
+            width: context.width,
+            color: Colors.white,):isValid?
 
-        builder: (context, player){return Column(children: [player,],);},
-      //onExitFullScreen: () {SystemChrome.setPreferredOrientations(DeviceOrientation.values);},
-        player: YoutubePlayer(
-            showVideoProgressIndicator: true,
-            progressIndicatorColor: Colors.blueAccent,
-            topActions: <Widget>[
-              const SizedBox(width: 8.0),
-              Expanded(
-                child: Text(
-                  _controller.metadata.title,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 18.0,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
+              Scaffold(
+
+                body: Container(
+                  decoration:const BoxDecoration(image: DecorationImage(image: AssetImage(ImagesAssetsManage.backImages,),fit: BoxFit.fill),),
+                  child: YoutubePlayerBuilder(
+
+                    builder: (context, player){return Column(children: [player,],);},
+                  //onExitFullScreen: () {SystemChrome.setPreferredOrientations(DeviceOrientation.values);},
+                    player: YoutubePlayer(
+                         width: context.width,
+                        showVideoProgressIndicator: true,
+                        progressIndicatorColor: Colors.blueAccent,
+                        topActions: <Widget>[
+                          const SizedBox(width: 8.0),
+                          Expanded(
+                            child: Text(
+                              _controller.metadata.title,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                          ),
+                          _controller.value.isFullScreen==false? IconButton(onPressed: (){
+
+                               Navigator.of(context)..pop()..pop();
+                            }, icon:const Icon(Icons.close)):const SizedBox(),
+
+
+                        ],
+                      onEnded: (value){context.read<HomeBloc>().add(AttendanceLessonEvent(widget.lesson));},
+                      onReady :()
+                      {
+                        _isPlayerReady = true;
+                       },
+                      controller: _controller,
+
+
+
+
+
+                    ),
+
+            ),
                 ),
-              ),
-
-            ],
-          onEnded: (value){context.read<HomeBloc>().add(AttendanceLessonEvent(widget.lesson));},
-          onReady :()
-          {
-            _isPlayerReady = true;
-           },
-          controller: _controller,
-
-          
-
-
-        ),
-      ):
-      Scaffold(body: FullErrorScreen(retryActionFunction: ()=>Navigator.of(context,rootNavigator: true).pop(), error: "error")),
-    );
+              ):
+            Scaffold(body: FullErrorScreen(retryActionFunction: ()=>Navigator.of(context,rootNavigator: true).pop(), error: "error"));
   },
-);
+),
+
+
+    );
   }
 
 }
